@@ -1,0 +1,7 @@
+{
+  "name": "friendsConnectApp",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "ionic-angular"
+}
