@@ -18,9 +18,8 @@ export class UserProvider {
 
   constructor(
     public http: HttpClient,
-    private processHTTPMsgService : ProcessHttpmsgProvider
-    ) {
-  }
+    private processHTTPMsgService : ProcessHttpmsgProvider,
+    ) { }
 
   /**
   * Sends a request to login. Stores the JWT to keep making
@@ -33,10 +32,8 @@ export class UserProvider {
     let headers = new HttpHeaders();
     headers.append('Content-Type','application/json');
     let apiEndPoint = baseUrl + 'login/';
-    console.log(apiEndPoint);
     return this.http.post(apiEndPoint, userCredentials, {headers: headers})
       .map(res => { return this.processHTTPMsgService.extractData(res); })
       .catch(error => { return this.processHTTPMsgService.handleError(error) });
   }
-
 }
