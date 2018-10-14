@@ -16,6 +16,7 @@ import { UserProvider } from '../providers/user/user';
 import { ProcessHttpmsgProvider } from '../providers/process-httpmsg/process-httpmsg';
 
 import { HttpClientModule } from '@angular/common/http';
+import { RegistrarPage } from '../pages/registrar/registrar';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { HttpClientModule } from '@angular/common/http';
     ContactPage,
     HomePage,
     TabsPage,
-    LoginPage
+    LoginPage,
+    RegistrarPage
   ],
   imports: [
     BrowserModule,
@@ -39,7 +41,8 @@ import { HttpClientModule } from '@angular/common/http';
     ContactPage,
     HomePage,
     LoginPage,
-    TabsPage
+    TabsPage,
+    RegistrarPage
   ],
   providers: [
     StatusBar,
