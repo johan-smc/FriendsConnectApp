@@ -18,6 +18,7 @@ import { UserProvider } from '../providers/user/user';
 import { ProcessHttpmsgProvider } from '../providers/process-httpmsg/process-httpmsg';
 
 import { HttpClientModule } from '@angular/common/http';
+import { RegistrarPage } from '../pages/registrar/registrar';
 import { ActivityProvider } from '../providers/activity/activity';
 
 @NgModule({
@@ -28,6 +29,7 @@ import { ActivityProvider } from '../providers/activity/activity';
     HomePage,
     TabsPage,
     LoginPage,
+    RegistrarPage,
     ListActivitiesPage,
     ActivityDetailPage,
   ],
@@ -45,6 +47,7 @@ import { ActivityProvider } from '../providers/activity/activity';
     HomePage,
     LoginPage,
     TabsPage,
+    RegistrarPage,
     ListActivitiesPage,
     ActivityDetailPage,
   ],

@@ -6,6 +6,7 @@ import { AlertController } from 'ionic-angular';
 import { ListActivitiesPage } from '../list-activities/list-activities'
 import { User } from '../../shared/user';
 import { Storage } from '@ionic/storage';
+import { RegistrarPage } from '../registrar/registrar';
 
 /**
  * Generated class for the LoginPage page.
@@ -22,7 +23,13 @@ import { Storage } from '@ionic/storage';
 export class LoginPage {
 
   public loginForm: FormGroup;
-  private user: User = { username: '', password: '' };
+  private user: User = { 
+    first_name: '',
+    last_name: '',
+    email:'',
+    phone: '',    
+    username: '',
+    password: '' };
 
   constructor(
     public navCtrl: NavController,
@@ -104,6 +111,9 @@ export class LoginPage {
       this.navCtrl.setRoot(ListActivitiesPage);
     },
     errmess => this.loginErrorHandler(errmess) );
+  }
+  onSignup():void {
+      this.navCtrl.push(RegistrarPage);
   }
 
 }

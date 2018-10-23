@@ -38,6 +38,15 @@ export class UserProvider {
       .map(res => { return this.processHTTPMsgService.extractData(res); })
       .catch(error => { return this.processHTTPMsgService.handleError(error) });
   }
+
+  createUser(userCreate: User):  Observable<Response> {
+    let headers = new HttpHeaders();
+    headers.append('Content-Type','application/json');
+    let apiEndPoint = baseUrl + 'users/';
+    return this.http.post(apiEndPoint,userCreate ,{headers: headers})
+      .map(res => { return this.processHTTPMsgService.extractData(res); })
+      .catch(error => { return this.processHTTPMsgService.handleError(error) });
+  
   setToken(token: any): any {
     window.localStorage.setItem('token', token);
   }
