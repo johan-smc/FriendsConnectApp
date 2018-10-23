@@ -7,7 +7,7 @@ import { baseUrl } from '../../shared/baseurl';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/delay';
 import 'rxjs/add/operator/catch';
-
+import { Storage } from '@ionic/storage';
 
 /**
  * A manager for the request to login, register, logout and
@@ -15,10 +15,12 @@ import 'rxjs/add/operator/catch';
  */
 @Injectable()
 export class UserProvider {
+  
 
   constructor(
     public http: HttpClient,
     private processHTTPMsgService : ProcessHttpmsgProvider,
+    private storage: Storage,
     ) { }
 
   /**
@@ -30,7 +32,7 @@ export class UserProvider {
 
   loginUser(userCredentials: User): Observable<Response> {
     let headers = new HttpHeaders();
-    headers.append('Content-Type','application/json');
+    headers = headers.append('Content-Type','application/json');
     let apiEndPoint = baseUrl + 'login/';
     return this.http.post(apiEndPoint, userCredentials, {headers: headers})
       .map(res => { return this.processHTTPMsgService.extractData(res); })
@@ -45,5 +47,14 @@ export class UserProvider {
       .map(res => { return this.processHTTPMsgService.extractData(res); })
       .catch(error => { return this.processHTTPMsgService.handleError(error) });
   
+  setToken(token: any): any {
+    window.localStorage.setItem('token', token);
+  }
+  getToken(): any
+  {
+    return window.localStorage.getItem('token');
+  }
+  setUser(user: User): any {
+    this.storage.set('user', user);
   }
 }

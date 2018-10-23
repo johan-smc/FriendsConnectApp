@@ -8,6 +8,8 @@ import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 import { LoginPage } from '../pages/login/login';
+import { ListActivitiesPage } from '../pages/list-activities/list-activities'
+import { ActivityDetailPage } from '../pages/activity-detail/activity-detail';
 
 import { IonicStorageModule } from '@ionic/storage';
 import { StatusBar } from '@ionic-native/status-bar';
@@ -17,6 +19,7 @@ import { ProcessHttpmsgProvider } from '../providers/process-httpmsg/process-htt
 
 import { HttpClientModule } from '@angular/common/http';
 import { RegistrarPage } from '../pages/registrar/registrar';
+import { ActivityProvider } from '../providers/activity/activity';
 
 @NgModule({
   declarations: [
@@ -26,7 +29,9 @@ import { RegistrarPage } from '../pages/registrar/registrar';
     HomePage,
     TabsPage,
     LoginPage,
-    RegistrarPage
+    RegistrarPage,
+    ListActivitiesPage,
+    ActivityDetailPage,
   ],
   imports: [
     BrowserModule,
@@ -42,14 +47,17 @@ import { RegistrarPage } from '../pages/registrar/registrar';
     HomePage,
     LoginPage,
     TabsPage,
-    RegistrarPage
+    RegistrarPage,
+    ListActivitiesPage,
+    ActivityDetailPage,
   ],
   providers: [
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     UserProvider,
-    ProcessHttpmsgProvider
+    ProcessHttpmsgProvider,
+    ActivityProvider
   ]
 })
 export class AppModule {}
