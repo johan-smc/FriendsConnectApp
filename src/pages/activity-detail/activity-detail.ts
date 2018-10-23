@@ -48,8 +48,8 @@ export class ActivityDetailPage {
 
   onSuscribe() {
     const alert = this.alertCtrl.create({
-      title: 'Suscripción Exotosa',
-      subTitle: 'Gracias Por Suscribirte!',
+      title: 'Subscription Success',
+      subTitle: 'Thanks for subscribe!',
       buttons: ['OK']
     });
     alert.present();

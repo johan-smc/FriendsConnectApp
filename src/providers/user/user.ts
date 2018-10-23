@@ -46,7 +46,7 @@ export class UserProvider {
     return this.http.post(apiEndPoint,userCreate ,{headers: headers})
       .map(res => { return this.processHTTPMsgService.extractData(res); })
       .catch(error => { return this.processHTTPMsgService.handleError(error) });
-  
+  }
   setToken(token: any): any {
     window.localStorage.setItem('token', token);
   }
