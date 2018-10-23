@@ -32,32 +32,28 @@ export class ActivityDetailPage {
   }
 
   ionViewDidLoad() {
-    console.log(this.navParams.get('activityId'));
-    const activityId = this.navParams.get('activityId');
-    this.activityProvider.getActivityById(activityId)
-    .subscribe((resp) =>{
-      console.log(typeof(resp));
-      let activityRes = JSON.stringify(resp);
-      this.activity = <Activity>JSON.parse(activityRes);
-      console.log(this.activity);
-      console.log(this.activity.id);
-      console.log(this.activity.name);
-    }
-    , errmess => this.getActivityErrorHandler(errmess));
+    this.loadActivity();  
   }
 
-  onSuscribe()
-  {
-    this.activityProvider.suscribeToActivity(this.activity.id)
-    .subscribe((resp) =>{
-      let suscribeSuccessAlert = this.alertCtrl.create({
-        title: 'Yay!',
-        subTitle: 'You has suscribe succesfull.',
-        buttons: ['Dismiss']
-      });
-      suscribeSuccessAlert.present();
-    }
-    , errmess => this.getActivityErrorHandler(errmess));
+  private loadActivity():void {
+    const activityId = this.navParams.get('activityId');
+    console.log(this.activity);
+    this.activityProvider.getActivityById(activityId)
+      .subscribe((resp) => {
+        let activityRes = JSON.stringify(resp);
+        this.activity = <Activity>JSON.parse(activityRes);
+      }
+        , errmess => this.getActivityErrorHandler(errmess));
+  }
+
+  onSuscribe() {
+    const alert = this.alertCtrl.create({
+      title: 'Suscripción Exotosa',
+      subTitle: 'Gracias Por Suscribirte!',
+      buttons: ['OK']
+    });
+    alert.present();
+    
   }
 
 }

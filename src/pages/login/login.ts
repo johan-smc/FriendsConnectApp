@@ -3,7 +3,6 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { UserProvider } from '../../providers/user/user';
 import { AlertController } from 'ionic-angular';
-import { TabsPage } from '../tabs/tabs';
 import { ListActivitiesPage } from '../list-activities/list-activities'
 import { User } from '../../shared/user';
 import { Storage } from '@ionic/storage';

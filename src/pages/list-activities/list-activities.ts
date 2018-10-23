@@ -19,6 +19,7 @@ export class ListActivitiesPage {
 
   searchQuery: string = '';
   private activities: Activity[];
+  private imageLink = 'https://picsum.photos/200/300/?random';
 
   constructor(
     public navCtrl: NavController,
