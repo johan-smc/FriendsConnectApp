@@ -27,9 +27,11 @@ export class LoginPage {
     first_name: '',
     last_name: '',
     email:'',
-    phone: '',    
+    //phone: '',    
     username: '',
-    password: '' };
+    password: '',
+    profile: {}
+   };
 
   constructor(
     public navCtrl: NavController,
