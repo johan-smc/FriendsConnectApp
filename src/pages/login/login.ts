@@ -3,7 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { UserProvider } from '../../providers/user/user';
 import { AlertController } from 'ionic-angular';
-import { TabsPage } from '../tabs/tabs';
+import { ListActivitiesPage } from '../list-activities/list-activities'
 import { User } from '../../shared/user';
 import { Storage } from '@ionic/storage';
 
@@ -95,10 +95,13 @@ export class LoginPage {
         subTitle: 'Login succesfull.',
         buttons: ['Dismiss']
       });
-      window.localStorage.setItem('token', resp['token']);
-      this.storage.set('user', this.user);
+      // TODOD - better than there
+      this.userProvider.setUser(this.user);
+      this.userProvider.setToken(resp['token']);
+      // window.localStorage.setItem('token', resp['token']);
+      // this.storage.set('user', this.user);
       registerSuccessAlert.present();
-      this.navCtrl.setRoot(TabsPage);
+      this.navCtrl.setRoot(ListActivitiesPage);
     },
     errmess => this.loginErrorHandler(errmess) );
   }
