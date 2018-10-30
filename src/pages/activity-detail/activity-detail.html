@@ -1,0 +1,55 @@
+<!--
+  Generated template for the ActivityDetailPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar text-center>
+    <ion-title >
+      <p *ngIf='activity'>
+        {{ activity.name  }} 
+      </p>
+      <p *ngIf='!activity'>
+          Activity
+      </p>  
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding >
+  <ion-card *ngIf="activity">
+  
+    <img src="https://raw.githubusercontent.com/ionic-team/ionic-preview-app/master/src/assets/img/nin-live.png" />
+  
+    <ion-card-content>
+      <ion-card-title>
+        {{ activity.name }} 
+      </ion-card-title>
+      <p>
+        {{ activity.description }}
+      </p>
+    </ion-card-content>
+  
+    <ion-row no-padding>
+      <ion-col text-center>
+        <button ion-button clear small color="danger" icon-start>
+          <ion-icon name='star'></ion-icon>
+          Favorite
+        </button>
+      </ion-col>
+      <ion-col text-center>
+        <button ion-button clear small color="danger" icon-start>
+          <ion-icon name='share-alt'></ion-icon>
+          Share
+        </button>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col text-center>
+        <button ion-button round text-center type="button" (click)="onSuscribe()"> Subscribe </button>
+      </ion-col>
+    </ion-row>
+  </ion-card>
+</ion-content>
