@@ -1,10 +1,9 @@
 export interface Activity {
-    id;
-    name : String;
-    description : String;
-    location : String;
-    due_date : String;
-    max_participants ;
-    visibility : Boolean;
-  };
-  
+  id;
+  name: string;
+  description: string;
+  location: string;
+  due_date: string;
+  max_participants;
+  visibility: boolean;
+}
