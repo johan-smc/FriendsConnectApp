@@ -1,24 +1,23 @@
-import { NgModule, ErrorHandler } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
-import { MyApp } from './app.component';
+import {HttpClientModule} from '@angular/common/http';
+import {ErrorHandler, NgModule} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {SplashScreen} from '@ionic-native/splash-screen';
+import {StatusBar} from '@ionic-native/status-bar';
+import {IonicStorageModule} from '@ionic/storage';
+import {IonicApp, IonicErrorHandler, IonicModule} from 'ionic-angular';
 
-import { ContactPage } from '../pages/contact/contact';
-import { TabsPage } from '../pages/tabs/tabs';
-import { LoginPage } from '../pages/login/login';
-import { ListActivitiesPage } from '../pages/list-activities/list-activities'
-import { ActivityDetailPage } from '../pages/activity-detail/activity-detail';
-import { ProfilePage } from '../pages/profile/profile';
+import {ActivityDetailPage} from '../pages/activity-detail/activity-detail';
+import {ContactPage} from '../pages/contact/contact';
+import {ListActivitiesPage} from '../pages/list-activities/list-activities';
+import {LoginPage} from '../pages/login/login';
+import {ProfilePage} from '../pages/profile/profile';
+import {RegistrarPage} from '../pages/registrar/registrar';
+import {TabsPage} from '../pages/tabs/tabs';
+import {ActivityProvider} from '../providers/activity/activity';
+import {ProcessHttpmsgProvider} from '../providers/process-httpmsg/process-httpmsg';
+import {UserProvider} from '../providers/user/user';
 
-import { IonicStorageModule } from '@ionic/storage';
-import { StatusBar } from '@ionic-native/status-bar';
-import { SplashScreen } from '@ionic-native/splash-screen';
-import { UserProvider } from '../providers/user/user';
-import { ProcessHttpmsgProvider } from '../providers/process-httpmsg/process-httpmsg';
-
-import { HttpClientModule } from '@angular/common/http';
-import { RegistrarPage } from '../pages/registrar/registrar';
-import { ActivityProvider } from '../providers/activity/activity';
+import {MyApp} from './app.component';
 
 @NgModule({
   declarations: [
@@ -32,9 +31,7 @@ import { ActivityProvider } from '../providers/activity/activity';
     ProfilePage,
   ],
   imports: [
-    BrowserModule,
-    IonicModule.forRoot(MyApp),
-    HttpClientModule,
+    BrowserModule, IonicModule.forRoot(MyApp), HttpClientModule,
     IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
@@ -49,12 +46,10 @@ import { ActivityProvider } from '../providers/activity/activity';
     ProfilePage,
   ],
   providers: [
-    StatusBar,
-    SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
-    UserProvider,
-    ProcessHttpmsgProvider,
-    ActivityProvider
+    StatusBar, SplashScreen,
+    {provide: ErrorHandler, useClass: IonicErrorHandler}, UserProvider,
+    ProcessHttpmsgProvider, ActivityProvider
   ]
 })
-export class AppModule {}
+export class AppModule {
+}

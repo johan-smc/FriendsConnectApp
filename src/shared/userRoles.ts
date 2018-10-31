@@ -1,3 +1,3 @@
 export enum UserRoles {
-    General = 1
+  General = 1
 }

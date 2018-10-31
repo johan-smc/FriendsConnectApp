@@ -1,4 +1,5 @@
 {
+  "extends": "gts/tslint.json",
   "rules": {
     "no-duplicate-variable": true,
     "no-unused-variable": [
