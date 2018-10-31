@@ -16,7 +16,6 @@ import { Storage } from '@ionic/storage';
 @Injectable()
 export class UserProvider {
   
-
   constructor(
     public http: HttpClient,
     private processHTTPMsgService : ProcessHttpmsgProvider,
@@ -29,7 +28,6 @@ export class UserProvider {
   * @param {User} userCredentials username and password to login.
   * @return {Observable<Response>} API's response.
   */
-
   loginUser(userCredentials: User): Observable<Response> {
     let headers = new HttpHeaders();
     headers = headers.append('Content-Type','application/json');
@@ -39,6 +37,12 @@ export class UserProvider {
       .catch(error => { return this.processHTTPMsgService.handleError(error) });
   }
 
+  /**
+    * Sends a request to create a new user with the values provided by
+    * the object User that goes through parameters.
+    * @param {User} userCreate new user to create values.
+    * @return {Observable<Response>} API's response.
+    */
   createUser(userCreate: User):  Observable<Response> {
     let headers = new HttpHeaders();
     headers.append('Content-Type','application/json');
@@ -47,14 +51,28 @@ export class UserProvider {
       .map(res => { return this.processHTTPMsgService.extractData(res); })
       .catch(error => { return this.processHTTPMsgService.handleError(error) });
   }
-  setToken(token: any): any {
+
+  /**
+   * Stores the JWT obtain in the login in the local storage.
+   * @param {string} token JWT to be saved.
+   */
+  setToken(token: string): void {
     window.localStorage.setItem('token', token);
   }
-  getToken(): any
-  {
+
+  /**
+   * Gets the JWT stored from the local storage.
+   * @return {string} JWT that was stored.
+   */
+  getToken(): string {
     return window.localStorage.getItem('token');
   }
-  setUser(user: User): any {
+
+  /**
+   * Stores the user that was logged in.
+   * @param {Uset} user User to be saved. 
+   */
+  setUser(user: User): void {
     this.storage.set('user', user);
   }
 }

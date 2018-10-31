@@ -19,7 +19,6 @@ export class ListActivitiesPage {
 
   searchQuery: string = '';
   private activities: Activity[];
-  private imageLink = 'https://picsum.photos/200/300/?random';
 
   constructor(
     public navCtrl: NavController,
@@ -30,14 +29,13 @@ export class ListActivitiesPage {
   }
 
   ionViewDidLoad() {
-    // console.log('ionViewDidLoad ListActivitiesPage');
   }
 
   initializeActivities(val = '') {
     this.activities = [];
     this.activityProvider.getAllActivities()
     .subscribe((resp) =>{
-      this.setActivities(resp);
+      this.activities = resp;
       // if the value is an empty string don't filter the items
       if (val && val.trim() != '') {
         this.activities = this.activities.filter((activity) => {
@@ -55,12 +53,10 @@ export class ListActivitiesPage {
       this.activities.push(resp[i]);
   }
   getAllActivitiesErrorHandler(errmess: any): void {
-    console.log(errmess);
     throw new Error("Method not implemented.");
   }
   onClickActivity(id: any)
   {
-    console.log("TEST... link to a activity "+id);
     this.navCtrl.push(ActivityDetailPage, {activityId: id} );
   }
 
