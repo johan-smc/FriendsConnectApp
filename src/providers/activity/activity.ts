@@ -1,66 +1,46 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-// import { Activity } from '../../shared/activity';
+import { Activity } from '../../shared/activity';
 import { ProcessHttpmsgProvider } from '../process-httpmsg/process-httpmsg';
-import { UserProvider } from '../user/user';
 import { baseUrl } from '../../shared/baseurl';
+import { httpOptions } from '../../shared/httpOptions';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/delay';
 import 'rxjs/add/operator/catch';
-import { Activity } from '../../shared/activity';
 
-/*
-  Generated class for the ActivityProvider provider.
-
-  See https://angular.io/guide/dependency-injection for more info on providers
-  and Angular DI.
-*/
+/**
+ * A manager to access the table Activity in the backend.
+ */
 @Injectable()
 export class ActivityProvider {
+
+  public readonly END_POINT:string = baseUrl + 'activities/'
 
   constructor(
     public http: HttpClient,
     private processHTTPMsgService : ProcessHttpmsgProvider,
-    private userProvider : UserProvider,
-    ) {
-    //console.log('Hello ActivityProvider Provider');
-  }
+    ) { }
 
-  getAllActivities() : Observable<Response>{
-    let headers = this._addStandardHeaders(new HttpHeaders);
-    // TODO - changue url
-    let apiEndPoint = baseUrl + 'activities/';
-    return this.http.get(apiEndPoint, {headers: headers})
+  /**
+   * Retreves all the activities from the data base. 
+   * @return {Observable<Activity[]>} API's response
+   */
+  getAllActivities(): Observable<Activity[]> {
+    return this.http.get(this.END_POINT, {headers: httpOptions})
       .map(res => { return this.processHTTPMsgService.extractData(res); })
       .catch(error => { return this.processHTTPMsgService.handleError(error) });
   }
 
-  getActivityById(id) : Observable<Response>{
-    let headers = this._addStandardHeaders(new HttpHeaders);
-    // TODO - changue url
-    let apiEndPoint = baseUrl + 'activity/'+ id;
-    return this.http.get<Activity>(apiEndPoint, {headers: headers})
+  /**
+   * Retreves the activity that matches the id sent in the parameters.
+   * @param {number} id Activity's ID
+   * @return {Observable<Activity>} API's response
+   */
+  getActivityById(id: number): Observable<Activity> {
+    return this.http.get<Activity>(this.END_POINT + id, { headers: httpOptions})
       .map(res => { return this.processHTTPMsgService.extractData(res); })
       .catch(error => { return this.processHTTPMsgService.handleError(error) });
   }
-
-  suscribeToActivity(id) : Observable<Response>{
-    let headers = this._addStandardHeaders(new HttpHeaders);
-    // TODO - changue url
-    let apiEndPoint = baseUrl + 'activity/'+ id;
-    return this.http.post(apiEndPoint, {headers: headers})
-      .map(res => { return this.processHTTPMsgService.extractData(res); })
-      .catch(error => { return this.processHTTPMsgService.handleError(error) });
-  }
-
-  public _addStandardHeaders(header:HttpHeaders)
-  {
-    // TODO - header = header.set maybe not correct
-    header = header.set('Content-Type','application/json');
-    // TODO - Verify get token, is correct the method?
-    let token = 'Token '+ this.userProvider.getToken();
-    header = header.set('Authorization', token);
-    return header;
-  }
+  
 }

@@ -1,9 +1,10 @@
 export interface User {
-  first_name: String;
-  last_name: String;
-  email:String;
-  //phone: String
-  username: String;
-  password: String; 
-  profile: {};
+  first_name: string;
+  last_name: string;
+  email:string;
+  //phone: string
+  username: string;
+  password: string; 
+  confirmPassword: string;
+  profile: { about_me: string, rol: number }
 }

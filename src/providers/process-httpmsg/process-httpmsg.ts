@@ -17,18 +17,18 @@ export class ProcessHttpmsgProvider {
    */
   public extractData(res: any) {
     let body = res;
-    console.log(body);
+    console.log('Data received: ', body);
     return res || {};
   }
 
   /**
    * Handles the error that can be produced by a request to the server.
+   * Prints the error in the console to help debuging.
    * @return {Observable} Possible error.
    */
   public handleError(error: HttpErrorResponse) {
-    // In a real world app, you might use a remote logging infrastructure
     let errMsg: Object;
-    console.log(error); //TODO - Delte
+    console.log('Error catched by HttpHandler', error);
     errMsg = {
       status: error.status,
       name: error.name,
