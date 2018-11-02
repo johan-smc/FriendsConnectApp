@@ -7,6 +7,7 @@ import {AlertController} from 'ionic-angular';
 import {UserProvider} from '../../providers/user/user';
 import {User} from '../../shared/user';
 import {RegistrarPage} from '../registrar/registrar';
+import {ForgotPasswordPage} from '../forgot-password/forgot-password';
 import {TabsPage} from '../tabs/tabs';
 
 /**
@@ -67,6 +68,14 @@ export class LoginPage {
    */
   onSignup(): void {
     this.navCtrl.push(RegistrarPage);
+  }
+
+  /**
+   * Redirects to the forgot password page for the user to
+   * reset password.
+   */
+  onForgotPassword(): void {
+    this.navCtrl.push(ForgotPasswordPage);
   }
 
   /**

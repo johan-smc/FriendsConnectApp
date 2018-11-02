@@ -9,6 +9,7 @@ import {Observable} from 'rxjs/Observable';
 
 import {baseUrl} from '../../shared/baseurl';
 import {User} from '../../shared/user';
+import {ForgotPasswordData} from '../../shared/forgotPasswordData'
 import {ProcessHttpmsgProvider} from '../process-httpmsg/process-httpmsg';
 
 /**
@@ -75,5 +76,35 @@ export class UserProvider {
    */
   setUser(user: User): void {
     this.storage.set('user', user);
+  }
+
+  /**
+   * Sends a request to forgot passwor. Stores the JWT to keep making
+   * requests to guarded routes of the API.
+   * @param {email} String email of user.
+   * @return {Observable<Response>} API's response.
+   */
+  fogotPassword(email: String): Observable<Response> {
+    let headers = new HttpHeaders();
+    headers = headers.append('Content-Type', 'application/json');
+    const apiEndPoint = baseUrl + 'users/' +email + '/reset_password';
+    return this.http.get(apiEndPoint, {headers})
+        .map(res => this.processHTTPMsgService.extractData(res))
+        .catch(error => this.processHTTPMsgService.handleError(error));
+  }
+
+  /**
+   * Sends a request to reset passwor with code. Stores the JWT to keep making
+   * requests to guarded routes of the API.
+   * @param {data} ForgotPasswordData email of user.
+   * @return {Observable<Response>} API's response.
+   */
+  resetPassword(data: ForgotPasswordData): Observable<Response> {
+    let headers = new HttpHeaders();
+    headers = headers.append('Content-Type', 'application/json');
+    const apiEndPoint = baseUrl + 'users/' + data.email + '/reset_password';
+    return this.http.post(apiEndPoint,data, {headers})
+        .map(res => this.processHTTPMsgService.extractData(res))
+        .catch(error => this.processHTTPMsgService.handleError(error));
   }
 }

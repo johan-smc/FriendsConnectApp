@@ -13,6 +13,7 @@ import {LoginPage} from '../pages/login/login';
 import {ProfilePage} from '../pages/profile/profile';
 import {RegistrarPage} from '../pages/registrar/registrar';
 import {TabsPage} from '../pages/tabs/tabs';
+import {ForgotPasswordPage} from '../pages/forgot-password/forgot-password';
 import {ActivityProvider} from '../providers/activity/activity';
 import {ProcessHttpmsgProvider} from '../providers/process-httpmsg/process-httpmsg';
 import {UserProvider} from '../providers/user/user';
@@ -29,6 +30,7 @@ import {MyApp} from './app.component';
     ListActivitiesPage,
     ActivityDetailPage,
     ProfilePage,
+    ForgotPasswordPage,
   ],
   imports: [
     BrowserModule, IonicModule.forRoot(MyApp), HttpClientModule,
@@ -44,6 +46,7 @@ import {MyApp} from './app.component';
     ListActivitiesPage,
     ActivityDetailPage,
     ProfilePage,
+    ForgotPasswordPage,
   ],
   providers: [
     StatusBar, SplashScreen,
