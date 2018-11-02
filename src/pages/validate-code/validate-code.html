@@ -1,0 +1,32 @@
+<!--
+  Generated template for the ValidateCodePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>validate</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <form [formGroup]="fogotPasswordForm" (ngSubmit)="onSubmit()">
+    <ion-list>
+      <ion-item >
+        <ion-label stacked>Code</ion-label>
+        <ion-input formControlName="code" type="text" [disabled]="!sendEmail"></ion-input>
+      </ion-item>
+    </ion-list>
+    <ion-row>
+      <ion-col>
+        <button ion-button round full type="submit" [disabled]="!fogotPasswordForm.valid">
+          Validate
+        </button>
+      </ion-col>
+    </ion-row>
+  </form>
+</ion-content>
