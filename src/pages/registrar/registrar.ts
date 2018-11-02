@@ -89,7 +89,7 @@ export class RegistrarPage {
             '',
             [
               Validators.required, Validators.minLength(4),
-              Validators.maxLength(20)
+              Validators.maxLength(50)
             ]
           ],
           username: [
