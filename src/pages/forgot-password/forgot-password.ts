@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {ForgotPasswordData} from '../../shared/forgotPasswordData'
+import {ForgotPasswordData} from '../../shared/forgotPasswordData';
 import {PasswordValidation} from '../../shared/passwordValidator';
 import {UserProvider} from '../../providers/user/user';
 import {AlertController} from 'ionic-angular';
 import { LoginPage } from '../login/login';
+
 /**
  * Generated class for the ForgotPasswordPage page.
  *
@@ -46,7 +47,7 @@ export class ForgotPasswordPage {
   /**
    * Return form with only email
    */
-  private getFormEmail() : any{
+  private getFormEmail() : FormGroup{
     return this.formBuilder.group({
       email: [
         '',
@@ -60,7 +61,7 @@ export class ForgotPasswordPage {
   /**
    * Return form with all params
    */
-  private getFormChangePassword() : any{
+  private getFormChangePassword() : FormGroup{
     return this.formBuilder.group({
       email: [
         '',
@@ -100,7 +101,7 @@ export class ForgotPasswordPage {
   onSubmit(): void {
     this.data = this.fogotPasswordForm.value;
     console.log(this.data);
-    if( this.sendEmail == false )
+    if( this.sendEmail === false )
     {
       this.sendEmailForgotPassword();
     }
@@ -108,7 +109,7 @@ export class ForgotPasswordPage {
     {
       this.changePasswordWithCode();
     }
-    this.chageButton()
+    this.chageButton();
   }
   /**
    * Displays an alert based on the error's message.
@@ -127,7 +128,7 @@ export class ForgotPasswordPage {
       const registerSuccessAlert = this.alertCtrl.create(
         {title: 'Yay!', subTitle: 'Email send succesfull.', buttons: ['Dismiss']});
       registerSuccessAlert.present();
-    }, errmess => this.ErrorHandler(errmess))
+    }, errmess => this.ErrorHandler(errmess));
   }
   /**
    * Send data for request chage password with a validate code
@@ -137,13 +138,15 @@ export class ForgotPasswordPage {
       const registerSuccessAlert = this.alertCtrl.create(
         {title: 'Yay!', subTitle: 'Password change send succesfull.', buttons: ['Dismiss']});
       registerSuccessAlert.present();
-      this.navCtrl.setRoot(LoginPage)
-    }, errmess => this.ErrorHandler(errmess))
+      // TODO - Go to tabs pague 
+      this.navCtrl.setRoot(LoginPage);
+    }, errmess => this.ErrorHandler(errmess));
   }
   /**
    * Change button for send email or chage password
    */
   chageButton(): void{
+    this.data = this.fogotPasswordForm.value;
     this.sendEmail = !this.sendEmail;
     if( this.sendEmail )
     {
@@ -151,10 +154,10 @@ export class ForgotPasswordPage {
     }
     else
     {
-      this.fogotPasswordForm = this.getFormEmail()
+      this.fogotPasswordForm = this.getFormEmail();
     }
     this.fogotPasswordForm.patchValue({
-      'email': this.data.email
+      'email': this.data.email 
     });
   }
 }
