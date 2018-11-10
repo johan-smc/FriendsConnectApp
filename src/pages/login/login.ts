@@ -8,6 +8,7 @@ import {UserProvider} from '../../providers/user/user';
 import {User} from '../../shared/user';
 import {RegistrarPage} from '../registrar/registrar';
 import {TabsPage} from '../tabs/tabs';
+import { ToastController } from 'ionic-angular';
 
 /**
  * Generated class for the LoginPage page.
@@ -26,11 +27,21 @@ export class LoginPage {
   private user: User;
 
   constructor(
+      public toastCtrl: ToastController,
       public navCtrl: NavController, public navParams: NavParams,
       private formBuilder: FormBuilder, private alertCtrl: AlertController,
       private userProvider: UserProvider, private storage: Storage) {
     this.loadUserFromStorage();
     this.buildLoginForm();
+  }
+
+  presentToast() {
+    const toast = this.toastCtrl.create({
+      message: 'Yay!, Login succesfull.',
+      duration: 3000,
+      position: 'top'
+    });
+    toast.present();
   }
 
   ionViewDidLoad() {}
@@ -52,12 +63,14 @@ export class LoginPage {
   onSubmit(): void {
     this.user = this.loginForm.value;
     this.userProvider.loginUser(this.user).subscribe((resp) => {
-      const registerSuccessAlert = this.alertCtrl.create(
-          {title: 'Yay!', subTitle: 'Login succesfull.', buttons: ['Dismiss']});
+      
+      this.storage.set('currentUser', this.user);
+      console.log('aaa' + this.user);
+      
       this.userProvider.setUser(this.user);
       this.userProvider.setToken(resp['token']);
-      registerSuccessAlert.present();
       this.navCtrl.setRoot(TabsPage);
+      this.presentToast();    
     }, errmess => this.loginErrorHandler(errmess));
   }
 
@@ -93,12 +106,14 @@ export class LoginPage {
    * Loads the user from local storage if there is one stored.
    */
   private loadUserFromStorage(): void {
-    this.storage.get('user').then(user => {
+    this.storage.get('currentUser').then(user => {
       if (user) {
+        console.log(user);
         this.user = user;
         this.loginForm.patchValue(
-            {'username': this.user.username, 'password': this.user.password});
+          {'username': this.user.username, 'password': this.user.password});
       }
+
     });
   }
 }
