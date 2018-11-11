@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 /**
  * Generated class for the EditProfilePage page.
@@ -15,11 +16,47 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class EditProfilePage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-  }
+  myForm: FormGroup;
+
+  constructor(
+    public navCtrl: NavController, 
+    public navParams: NavParams,
+    public formBuilder: FormBuilder
+    ) 
+    {
+
+      this.myForm = this.createMyForm();
+     }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad EditProfilePage');
   }
+
+  private createMyForm(): FormGroup {
+    return this.myForm = this.formBuilder.group(
+        {
+          first_name: [
+            '',
+            [
+              Validators.required, Validators.minLength(4),
+              Validators.maxLength(20)
+            ]
+          ],
+          last_name: [
+            '',
+            [
+              Validators.required, Validators.minLength(4),
+              Validators.maxLength(20)
+            ]
+          ]
+        });
+  }
+
+  saveData(){
+    console.log(this.myForm.value);
+    console.log(this.myForm.value.last_name);
+    
+  }
+  
 
 }

@@ -15,4 +15,20 @@
 
 <ion-content padding>
 
+
+  <form [formGroup]="myForm" (ngSubmit)="saveData()">
+    <ion-item>
+      <ion-icon name="person" item-start></ion-icon>
+      <ion-label stacked>Nombres:</ion-label>
+      <ion-input formControlName="first_name" type="text" placeholder="Nombres.."></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-icon name="person" item-start></ion-icon>
+      <ion-label stacked>Apellidos:</ion-label>
+      <ion-input formControlName="last_name" type="text" placeholder="Apellidos.."></ion-input>
+    </ion-item>
+    <button ion-button round full type="submit" [disabled]="!myForm.valid">Login</button>
+  </form>
+
+
 </ion-content>
