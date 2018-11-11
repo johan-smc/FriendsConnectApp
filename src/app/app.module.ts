@@ -16,6 +16,7 @@ import {TabsPage} from '../pages/tabs/tabs';
 import {ActivityProvider} from '../providers/activity/activity';
 import {ProcessHttpmsgProvider} from '../providers/process-httpmsg/process-httpmsg';
 import {UserProvider} from '../providers/user/user';
+import {EditProfilePage} from '../pages/edit-profile/edit-profile';
 
 import {MyApp} from './app.component';
 
@@ -29,6 +30,7 @@ import {MyApp} from './app.component';
     ListActivitiesPage,
     ActivityDetailPage,
     ProfilePage,
+    EditProfilePage,
   ],
   imports: [
     BrowserModule, IonicModule.forRoot(MyApp), HttpClientModule,
@@ -44,6 +46,7 @@ import {MyApp} from './app.component';
     ListActivitiesPage,
     ActivityDetailPage,
     ProfilePage,
+    EditProfilePage,
   ],
   providers: [
     StatusBar, SplashScreen,

@@ -3,7 +3,7 @@ import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angu
 import { UserProvider } from '../../providers/user/user';
 import { User } from '../../shared/user';
 import { Storage } from '@ionic/storage';
-
+import { EditProfilePage} from '../edit-profile/edit-profile';
 /**
  * Generated class for the ProfilePage page.
  *
@@ -19,9 +19,13 @@ import { Storage } from '@ionic/storage';
 export class ProfilePage {
 
   private user2: User;
+  private dato1: string;
+  private dato2: string;
+  private dato3: string;
+  private dato4: string;
+
   private alertCtrl: AlertController;
   constructor(
-
     public navCtrl: NavController,
     public navParams: NavParams,
     private userProvider: UserProvider,
@@ -30,6 +34,18 @@ export class ProfilePage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ProfilePage');
+    //this.dato1 = "Nombre: ";
+    //this.dato2 = "Correo: ";
+    //this.dato3 = "Username: ";
+    //this.dato4 = "Descripción: ";
+
+
+  }
+
+  goEditProfile():void 
+  {
+    console.log("entre");
+    this.navCtrl.push(EditProfilePage);
   }
 
   getErrorHandler(errmess) {
@@ -41,6 +57,15 @@ export class ProfilePage {
   getDataProfile(): void 
   {
     console.log('Boton');
+    
+    this.dato1="cambio1";
+    this.dato2="cambio2";
+    this.dato3="cambio3";
+    this.dato4="cambio4";
+    console.log("---" + this.dato1);
+    
+
+
     this.storage.get('currentUser').then(user => {
       if (user) 
       {
@@ -48,6 +73,11 @@ export class ProfilePage {
           console.log('aaaaaaaaaa' + this.user2);
           this.userProvider.getUser(this.user2.username).subscribe((resp) => {
           this.user2 = resp;
+          this.dato1 = this.user2.first_name + this.user2.last_name;
+          //this.dato2 = this.user2.email;
+          //this.dato3 = this.user2.username;
+          //this.dato4 = this.user2.profile.about_me;
+
         }, errmess => this.getErrorHandler(errmess));
       }
     });
