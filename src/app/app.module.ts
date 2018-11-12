@@ -7,11 +7,13 @@ import {IonicStorageModule} from '@ionic/storage';
 import {IonicApp, IonicErrorHandler, IonicModule} from 'ionic-angular';
 
 import {ContactPage} from '../pages/contact/contact';
+import {ForgotPasswordPage} from '../pages/forgot-password/forgot-password';
 import {ListActivitiesPage} from '../pages/list-activities/list-activities';
 import {LoginPage} from '../pages/login/login';
 import {ProfilePage} from '../pages/profile/profile';
 import {RegistrarPage} from '../pages/registrar/registrar';
 import {TabsPage} from '../pages/tabs/tabs';
+import {ValidateCodePage} from '../pages/validate-code/validate-code';
 import {CommentsPage} from '../pages/comments/comments';
 
 import {ActivityProvider} from '../providers/activity/activity';
@@ -31,6 +33,8 @@ import { CommentProvider } from '../providers/comment/comment';
     RegistrarPage,
     ListActivitiesPage,
     ProfilePage,
+    ForgotPasswordPage,
+    ValidateCodePage,
     EditProfilePage,
     CommentsPage,
   ],
@@ -47,6 +51,8 @@ import { CommentProvider } from '../providers/comment/comment';
     RegistrarPage,
     ListActivitiesPage,
     ProfilePage,
+    ForgotPasswordPage,
+    ValidateCodePage,
     EditProfilePage,
     CommentsPage,
   ],

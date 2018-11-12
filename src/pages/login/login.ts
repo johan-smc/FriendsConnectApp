@@ -6,8 +6,10 @@ import {AlertController} from 'ionic-angular';
 
 import {UserProvider} from '../../providers/user/user';
 import {User} from '../../shared/user';
+import {ForgotPasswordPage} from '../forgot-password/forgot-password';
 import {RegistrarPage} from '../registrar/registrar';
 import {TabsPage} from '../tabs/tabs';
+import {ValidateCodePage} from '../validate-code/validate-code';
 import { ToastController } from 'ionic-angular';
 
 /**
@@ -69,7 +71,11 @@ export class LoginPage {
       
       this.userProvider.setUser(this.user);
       this.userProvider.setToken(resp['token']);
-      this.navCtrl.setRoot(TabsPage);
+      if (resp['validate']) {
+        this.navCtrl.setRoot(TabsPage);
+      } else {
+        this.navCtrl.setRoot(ValidateCodePage);
+      }
       this.presentToast();    
     }, errmess => this.loginErrorHandler(errmess));
   }
@@ -80,6 +86,14 @@ export class LoginPage {
    */
   onSignup(): void {
     this.navCtrl.push(RegistrarPage);
+  }
+
+  /**
+   * Redirects to the forgot password page for the user to
+   * reset password.
+   */
+  onForgotPassword(): void {
+    this.navCtrl.push(ForgotPasswordPage);
   }
 
   /**

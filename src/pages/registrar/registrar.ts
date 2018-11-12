@@ -4,6 +4,7 @@ import {AlertController, IonicPage, NavController, NavParams} from 'ionic-angula
 
 import {UserProvider} from '../../providers/user/user';
 import {PasswordValidation} from '../../shared/passwordValidator';
+import {regexEmail} from '../../shared/regexs';
 import {User} from '../../shared/user';
 import {UserRoles} from '../../shared/userRoles';
 import {LoginPage} from '../login/login';
@@ -55,7 +56,7 @@ export class RegistrarPage {
     delete this.user.confirmPassword;
     this.user.profile = {
       about_me: 'Something about me',
-      rol: UserRoles.General
+      rol: UserRoles.NotValidate
     };
     this.userProvider.createUser(this.user).subscribe((resp) => {
       const registerSuccessAlert = this.alertCtrl.create(
@@ -75,42 +76,42 @@ export class RegistrarPage {
             '',
             [
               Validators.required, Validators.minLength(4),
-              Validators.maxLength(20)
+              Validators.maxLength(100)
             ]
           ],
           last_name: [
             '',
             [
               Validators.required, Validators.minLength(4),
-              Validators.maxLength(20)
+              Validators.maxLength(100)
             ]
           ],
           email: [
             '',
             [
               Validators.required, Validators.minLength(4),
-              Validators.maxLength(20)
+              Validators.maxLength(100), Validators.pattern(regexEmail)
             ]
           ],
           username: [
             '',
             [
               Validators.required, Validators.minLength(4),
-              Validators.maxLength(20)
+              Validators.maxLength(50)
             ]
           ],
           password: [
             '',
             [
               Validators.required, Validators.minLength(4),
-              Validators.maxLength(20)
+              Validators.maxLength(40)
             ]
           ],
           confirmPassword: [
             '',
             [
               Validators.required, Validators.minLength(4),
-              Validators.maxLength(20)
+              Validators.maxLength(40)
             ]
           ]
         },
