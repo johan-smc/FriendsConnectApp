@@ -17,7 +17,8 @@
   <form [formGroup]="validateCodeForm" (ngSubmit)="onSubmit()">
     <ion-row>
       <ion-item >
-        <ion-label stacked>Code</ion-label>
+        <ion-icon name="key" item-start></ion-icon>
+        <ion-label color="Dark" floating>Code</ion-label>
         <ion-input formControlName="code" type="text" ></ion-input>
       </ion-item>
     </ion-row>

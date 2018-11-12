@@ -76,7 +76,6 @@ export class LoginPage {
       } else {
         this.navCtrl.setRoot(ValidateCodePage);
       }
-      this.navCtrl.setRoot(TabsPage);
       this.presentToast();    
     }, errmess => this.loginErrorHandler(errmess));
   }
