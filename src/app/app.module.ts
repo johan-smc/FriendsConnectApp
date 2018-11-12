@@ -6,18 +6,20 @@ import {StatusBar} from '@ionic-native/status-bar';
 import {IonicStorageModule} from '@ionic/storage';
 import {IonicApp, IonicErrorHandler, IonicModule} from 'ionic-angular';
 
-import {ActivityDetailPage} from '../pages/activity-detail/activity-detail';
 import {ContactPage} from '../pages/contact/contact';
 import {ListActivitiesPage} from '../pages/list-activities/list-activities';
 import {LoginPage} from '../pages/login/login';
 import {ProfilePage} from '../pages/profile/profile';
 import {RegistrarPage} from '../pages/registrar/registrar';
 import {TabsPage} from '../pages/tabs/tabs';
+import {CommentsPage} from '../pages/comments/comments';
+
 import {ActivityProvider} from '../providers/activity/activity';
 import {ProcessHttpmsgProvider} from '../providers/process-httpmsg/process-httpmsg';
 import {UserProvider} from '../providers/user/user';
 
 import {MyApp} from './app.component';
+import { CommentProvider } from '../providers/comment/comment';
 
 @NgModule({
   declarations: [
@@ -27,8 +29,8 @@ import {MyApp} from './app.component';
     LoginPage,
     RegistrarPage,
     ListActivitiesPage,
-    ActivityDetailPage,
     ProfilePage,
+    CommentsPage,
   ],
   imports: [
     BrowserModule, IonicModule.forRoot(MyApp), HttpClientModule,
@@ -42,13 +44,14 @@ import {MyApp} from './app.component';
     TabsPage,
     RegistrarPage,
     ListActivitiesPage,
-    ActivityDetailPage,
     ProfilePage,
+    CommentsPage,
   ],
   providers: [
     StatusBar, SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler}, UserProvider,
-    ProcessHttpmsgProvider, ActivityProvider
+    ProcessHttpmsgProvider, ActivityProvider,
+    CommentProvider
   ]
 })
 export class AppModule {
