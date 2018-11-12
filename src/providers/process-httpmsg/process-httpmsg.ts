@@ -29,7 +29,7 @@ export class ProcessHttpmsgProvider {
   handleError(error: HttpErrorResponse) {
     let errMsg = {};
     console.log('Error catched by HttpHandler', error);
-    errMsg = {status: error.status, name: error.name, message: error.message};
+    errMsg = {status: error.status, name: error.name, message: error.statusText};
     console.error(errMsg);
     return Observable.throw(errMsg);
   }

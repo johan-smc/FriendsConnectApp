@@ -1,9 +1,12 @@
 export interface Activity {
-  id;
+  id: number;
   name: string;
   description: string;
   location: string;
-  due_date: string;
-  max_participants;
+  due_date: Date;
+  max_participants: number;
   visibility: boolean;
+  author: string;
+  image: string;
+  date_created: Date;
 }
