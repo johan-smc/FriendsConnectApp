@@ -5,6 +5,7 @@ import {AlertController} from 'ionic-angular';
 import {ActivityProvider} from '../../providers/activity/activity';
 import {Activity} from '../../shared/activity';
 
+
 /**
  * Generated class for the ActivityDetailPage page.
  *

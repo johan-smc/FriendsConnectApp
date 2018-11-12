@@ -8,12 +8,13 @@ import {IonicApp, IonicErrorHandler, IonicModule} from 'ionic-angular';
 
 import {ActivityDetailPage} from '../pages/activity-detail/activity-detail';
 import {ContactPage} from '../pages/contact/contact';
+import {ForgotPasswordPage} from '../pages/forgot-password/forgot-password';
 import {ListActivitiesPage} from '../pages/list-activities/list-activities';
 import {LoginPage} from '../pages/login/login';
 import {ProfilePage} from '../pages/profile/profile';
 import {RegistrarPage} from '../pages/registrar/registrar';
 import {TabsPage} from '../pages/tabs/tabs';
-import {ForgotPasswordPage} from '../pages/forgot-password/forgot-password';
+import {ValidateCodePage} from '../pages/validate-code/validate-code';
 import {ActivityProvider} from '../providers/activity/activity';
 import {ProcessHttpmsgProvider} from '../providers/process-httpmsg/process-httpmsg';
 import {UserProvider} from '../providers/user/user';
@@ -31,6 +32,7 @@ import {MyApp} from './app.component';
     ActivityDetailPage,
     ProfilePage,
     ForgotPasswordPage,
+    ValidateCodePage,
   ],
   imports: [
     BrowserModule, IonicModule.forRoot(MyApp), HttpClientModule,
@@ -47,6 +49,7 @@ import {MyApp} from './app.component';
     ActivityDetailPage,
     ProfilePage,
     ForgotPasswordPage,
+    ValidateCodePage,
   ],
   providers: [
     StatusBar, SplashScreen,

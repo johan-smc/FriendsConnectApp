@@ -1,13 +1,14 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {Component} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {IonicPage, NavController, NavParams} from 'ionic-angular';
+import {AlertController} from 'ionic-angular';
+import {ToastController} from 'ionic-angular';
+
+import {UserProvider} from '../../providers/user/user';
 import {ForgotPasswordData} from '../../shared/forgotPasswordData';
 import {PasswordValidation} from '../../shared/passwordValidator';
-import {UserProvider} from '../../providers/user/user';
-import {AlertController} from 'ionic-angular';
-import { LoginPage } from '../login/login';
-import { ToastController } from 'ionic-angular';
-import { regexEmail, regexNumbers} from '../../shared/regexs';
+import {regexEmail, regexNumbers} from '../../shared/regexs';
+import {LoginPage} from '../login/login';
 
 
 /**
@@ -23,24 +24,23 @@ import { regexEmail, regexNumbers} from '../../shared/regexs';
   templateUrl: 'forgot-password.html',
 })
 export class ForgotPasswordPage {
-  fogotPasswordForm : FormGroup;
-  private data : ForgotPasswordData;
-  private sendEmail : boolean;
+  fogotPasswordForm: FormGroup;
+  private data: ForgotPasswordData;
+  private sendEmail: boolean;
 
   constructor(
-    public navCtrl: NavController,
-    public navParams: NavParams,
-    private formBuilder: FormBuilder,
-    private userProvider: UserProvider,
-    private alertCtrl: AlertController,
-    public toastCtrl: ToastController,
-    ) {
+      public navCtrl: NavController,
+      public navParams: NavParams,
+      private formBuilder: FormBuilder,
+      private userProvider: UserProvider,
+      private alertCtrl: AlertController,
+      public toastCtrl: ToastController,
+  ) {
     this.buildForgotForm();
     this.sendEmail = false;
   }
 
-  ionViewDidLoad() {
-  }
+  ionViewDidLoad() {}
 
   /**
    * Builds the forgot form and adds it's validators.
@@ -51,22 +51,7 @@ export class ForgotPasswordPage {
   /**
    * Return form with only email
    */
-  private getFormEmail() : FormGroup{
-    return this.formBuilder.group({
-      email: [
-        '',
-        [
-          Validators.required, Validators.minLength(4),
-          Validators.maxLength(30),
-          Validators.pattern(regexEmail)
-        ]
-      ]
-    });
-  }
-  /**
-   * Return form with all params
-   */
-  private getFormChangePassword() : FormGroup{
+  private getFormEmail(): FormGroup {
     return this.formBuilder.group({
       email: [
         '',
@@ -74,30 +59,45 @@ export class ForgotPasswordPage {
           Validators.required, Validators.minLength(4),
           Validators.maxLength(30), Validators.pattern(regexEmail)
         ]
-      ],
-      code: [
-        '',
-        [
-          Validators.required, Validators.minLength(6),
-          Validators.maxLength(6), Validators.pattern(regexNumbers)
-        ]
-      ],
-      password: [
-        '',
-        [
-          Validators.required, Validators.minLength(4),
-          Validators.maxLength(20)
-        ]
-      ],
-      confirmPassword: [
-        '',
-        [
-          Validators.required, Validators.minLength(4),
-          Validators.maxLength(20)
-        ]
       ]
-    },
-    {validator: PasswordValidation.MatchPassword});
+    });
+  }
+  /**
+   * Return form with all params
+   */
+  private getFormChangePassword(): FormGroup {
+    return this.formBuilder.group(
+        {
+          email: [
+            '',
+            [
+              Validators.required, Validators.minLength(4),
+              Validators.maxLength(30), Validators.pattern(regexEmail)
+            ]
+          ],
+          code: [
+            '',
+            [
+              Validators.required, Validators.minLength(6),
+              Validators.maxLength(6), Validators.pattern(regexNumbers)
+            ]
+          ],
+          password: [
+            '',
+            [
+              Validators.required, Validators.minLength(4),
+              Validators.maxLength(20)
+            ]
+          ],
+          confirmPassword: [
+            '',
+            [
+              Validators.required, Validators.minLength(4),
+              Validators.maxLength(20)
+            ]
+          ]
+        },
+        {validator: PasswordValidation.MatchPassword});
   }
   /**
    * Sends the field's information to validate in the API and
@@ -106,34 +106,26 @@ export class ForgotPasswordPage {
   onSubmit(): void {
     this.data = this.fogotPasswordForm.value;
     this.data.email = this.data.email.toLowerCase();
-    if( this.sendEmail === false )
-    {
-       this.sendEmailForgotPassword();
+    if (this.sendEmail === false) {
+      this.sendEmailForgotPassword();
+    } else {
+      this.changePasswordWithCode();
     }
-    else
-    {
-       this.changePasswordWithCode();
-    }
-      
   }
   /**
    * Displays an alert based on the error's message.
    * @param {any} errmess JSON with error generated by the API.
    */
   ErrorHandler(errmess) {
-    let messageError = "";
+    let messageError = '';
 
-    
-    if( errmess.error['email'] !== undefined )
-    {
-      messageError = "Email not found.";
-    }
-    else if( errmess.error['code'] !== undefined )
-    {
-      messageError = "Code wrong.";
-    }
-    else {
-      messageError = "Contact to admin.";
+
+    if (errmess.error['email'] !== undefined) {
+      messageError = 'Email not found.';
+    } else if (errmess.error['code'] !== undefined) {
+      messageError = 'Code wrong.';
+    } else {
+      messageError = 'Contact to admin.';
     }
     const registerErrorAlert = this.alertCtrl.create(
         {title: 'Ups...', subTitle: messageError, buttons: ['Dismiss']});
@@ -145,19 +137,16 @@ export class ForgotPasswordPage {
    */
   ErrorHandlerEmail(errmess) {
     const registerErrorAlert = this.alertCtrl.create(
-        {title: 'Ups...', subTitle: "Email Not found", buttons: ['Dismiss']});
+        {title: 'Ups...', subTitle: 'Email Not found', buttons: ['Dismiss']});
     registerErrorAlert.present();
   }
 
   /*
-  * Display toast
-  */
+   * Display toast
+   */
   presentToast(messageIn: string, durationIn: number, positionIn = 'down') {
-    const toast = this.toastCtrl.create({
-      message: messageIn,
-      duration: durationIn,
-      position: positionIn
-    });
+    const toast = this.toastCtrl.create(
+        {message: messageIn, duration: durationIn, position: positionIn});
     toast.present();
   }
 
@@ -167,8 +156,8 @@ export class ForgotPasswordPage {
    */
   sendEmailForgotPassword(): void {
     this.userProvider.fogotPassword(this.data.email).subscribe((resp) => {
-      this.presentToast('Yay! Email send succesfull.', 3000); 
-      this.changeButton(); 
+      this.presentToast('Yay! Email send succesfull.', 3000);
+      this.changeButton();
     }, errmess => this.ErrorHandlerEmail(errmess));
   }
   /**
@@ -176,27 +165,22 @@ export class ForgotPasswordPage {
    */
   changePasswordWithCode(): void {
     this.userProvider.resetPassword(this.data).subscribe((resp) => {
-      this.presentToast('Yay! Password change send succesfull.', 3000);  
-      // TODO - Go to tabs pague 
+      this.presentToast('Yay! Password change send succesfull.', 3000);
+      // TODO - Go to tabs pague
       this.navCtrl.setRoot(LoginPage);
     }, errmess => this.ErrorHandler(errmess));
   }
   /**
    * Change button for send email or chage password
    */
-  changeButton(): void{
+  changeButton(): void {
     this.data = this.fogotPasswordForm.value;
     this.sendEmail = !this.sendEmail;
-    if( this.sendEmail )
-    {
+    if (this.sendEmail) {
       this.fogotPasswordForm = this.getFormChangePassword();
-    }
-    else
-    {
+    } else {
       this.fogotPasswordForm = this.getFormEmail();
     }
-    this.fogotPasswordForm.patchValue({
-      'email': this.data.email 
-    });
+    this.fogotPasswordForm.patchValue({'email': this.data.email});
   }
 }

@@ -1,6 +1,6 @@
-import { NgModule } from '@angular/core';
-import { IonicPageModule } from 'ionic-angular';
-import { ValidateCodePage } from './validate-code';
+import {NgModule} from '@angular/core';
+import {IonicPageModule} from 'ionic-angular';
+import {ValidateCodePage} from './validate-code';
 
 @NgModule({
   declarations: [
@@ -10,4 +10,5 @@ import { ValidateCodePage } from './validate-code';
     IonicPageModule.forChild(ValidateCodePage),
   ],
 })
-export class ValidateCodePageModule {}
+export class ValidateCodePageModule {
+}

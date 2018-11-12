@@ -6,9 +6,10 @@ import {AlertController} from 'ionic-angular';
 
 import {UserProvider} from '../../providers/user/user';
 import {User} from '../../shared/user';
-import {RegistrarPage} from '../registrar/registrar';
 import {ForgotPasswordPage} from '../forgot-password/forgot-password';
+import {RegistrarPage} from '../registrar/registrar';
 import {TabsPage} from '../tabs/tabs';
+import {ValidateCodePage} from '../validate-code/validate-code';
 
 /**
  * Generated class for the LoginPage page.
@@ -58,7 +59,11 @@ export class LoginPage {
       this.userProvider.setUser(this.user);
       this.userProvider.setToken(resp['token']);
       registerSuccessAlert.present();
-      this.navCtrl.setRoot(TabsPage);
+      if (resp['validate']) {
+        this.navCtrl.setRoot(TabsPage);
+      } else {
+        this.navCtrl.setRoot(ValidateCodePage);
+      }
     }, errmess => this.loginErrorHandler(errmess));
   }
 

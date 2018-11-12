@@ -8,10 +8,10 @@ import {Storage} from '@ionic/storage';
 import {Observable} from 'rxjs/Observable';
 
 import {baseUrl} from '../../shared/baseurl';
-import {User} from '../../shared/user';
 import {ForgotPasswordData} from '../../shared/forgotPasswordData';
-import {ProcessHttpmsgProvider} from '../process-httpmsg/process-httpmsg';
 import {httpOptions} from '../../shared/httpOptions';
+import {User} from '../../shared/user';
+import {ProcessHttpmsgProvider} from '../process-httpmsg/process-httpmsg';
 
 /**
  * A manager for the request to login, register, logout and
@@ -88,7 +88,7 @@ export class UserProvider {
   fogotPassword(email: string): Observable<Response> {
     let headers = new HttpHeaders();
     headers = headers.append('Content-Type', 'application/json');
-    const apiEndPoint = baseUrl + 'users/' +email + '/reset_password';
+    const apiEndPoint = baseUrl + 'users/' + email + '/reset_password';
     return this.http.get(apiEndPoint, {headers})
         .map(res => this.processHTTPMsgService.extractData(res))
         .catch(error => this.processHTTPMsgService.handleError(error));
@@ -104,19 +104,32 @@ export class UserProvider {
     let headers = new HttpHeaders();
     headers = headers.append('Content-Type', 'application/json');
     const apiEndPoint = baseUrl + 'users/' + data.email + '/reset_password';
-    return this.http.post(apiEndPoint,data, {headers})
+    return this.http.post(apiEndPoint, data, {headers})
         .map(res => this.processHTTPMsgService.extractData(res))
         .catch(error => this.processHTTPMsgService.handleError(error));
   }
 
   /**
-   * Sends a request to reset passwor with code. Stores the JWT to keep making
+   * Sends a request to reset password with code. Stores the JWT to keep making
    * requests to guarded routes of the API.
    * @param {code} String email of user.
    * @return {Observable<Response>} API's response.
    */
-  validateCode(code: string): Observable<Response> {
-    const apiEndPoint = baseUrl + 'users/' + '--' + '/validate/'+ code;
+  validateCode(user: string, code: string): Observable<Response> {
+    const apiEndPoint = baseUrl + 'users/' + user + '/validate/' + code;
+    return this.http.get(apiEndPoint, {headers: httpOptions})
+        .map(res => this.processHTTPMsgService.extractData(res))
+        .catch(error => this.processHTTPMsgService.handleError(error));
+  }
+
+  /**
+   * Re sends a request to reset password with code. Stores the JWT to keep
+   * making requests to guarded routes of the API.
+   * @param {code} String email of user.
+   * @return {Observable<Response>} API's response.
+   */
+  reSendValidateCode(user: string): Observable<Response> {
+    const apiEndPoint = baseUrl + 'users/' + user + '/validate';
     return this.http.get(apiEndPoint, {headers: httpOptions})
         .map(res => this.processHTTPMsgService.extractData(res))
         .catch(error => this.processHTTPMsgService.handleError(error));
