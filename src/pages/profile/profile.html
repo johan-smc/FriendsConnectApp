@@ -15,4 +15,34 @@
 
 <ion-content padding>
 
+
+  <!--<h1 ion-text color="dark"></h1>-->
+
+  <ion-row>
+      <ion-col></ion-col>
+      <ion-col width-67 >
+        <img src="../../assets/imgs/useravatar.png" width="200px" />
+      </ion-col>
+      <ion-col></ion-col>
+    </ion-row>
+
+  <h5 ion-text color="dark">Name:<h6 ion-text color="dark"> {{dato1}}.</h6></h5>
+  <h5 ion-text color="dark">E-mail:<h6 ion-text color="dark"> {{dato2}}.</h6></h5>
+  <h5 ion-text color="dark">Username:<h6 ion-text color="dark"> {{dato3}}</h6></h5>
+  <h5 ion-text color="dark">About me:<h6 ion-text color="dark"> {{dato4}}.</h6></h5>
+  
+
+
+  <p>
+    <button ion-button block round icon-start (click)="goEditProfile()">
+      <ion-icon name='build' is-active="false"></ion-icon>
+      Edit Profile
+    </button>
+  </p>
+  <p>
+    <button ion-button block color='danger' round icon-start (click)="singOut()">
+      <ion-icon name='exit' is-active="false"></ion-icon>
+      Log Out
+    </button>
+  </p>
 </ion-content>

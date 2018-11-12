@@ -2,10 +2,10 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/delay';
 import 'rxjs/add/operator/catch';
 
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Injectable} from '@angular/core';
-import {Storage} from '@ionic/storage';
-import {Observable} from 'rxjs/Observable';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Storage } from '@ionic/storage';
+import { Observable } from 'rxjs/Observable';
 
 import {baseUrl} from '../../shared/baseurl';
 import {ForgotPasswordData} from '../../shared/forgotPasswordData';
@@ -19,11 +19,22 @@ import {ProcessHttpmsgProvider} from '../process-httpmsg/process-httpmsg';
  */
 @Injectable()
 export class UserProvider {
+
+  private currentUser: User;
+
   constructor(
-      public http: HttpClient,
-      private processHTTPMsgService: ProcessHttpmsgProvider,
-      private storage: Storage,
-  ) {}
+    public http: HttpClient,
+    private processHTTPMsgService: ProcessHttpmsgProvider,
+    private storage: Storage,
+  ) { }
+
+  setCurrentUser(user: User): void {
+    this.currentUser = user;
+  }
+
+  getCurrenUser(): User {
+    return this.currentUser;
+  }
 
   /**
    * Sends a request to login. Stores the JWT to keep making
@@ -35,9 +46,41 @@ export class UserProvider {
     let headers = new HttpHeaders();
     headers = headers.append('Content-Type', 'application/json');
     const apiEndPoint = baseUrl + 'login/';
-    return this.http.post(apiEndPoint, userCredentials, {headers})
-        .map(res => this.processHTTPMsgService.extractData(res))
-        .catch(error => this.processHTTPMsgService.handleError(error));
+    return this.http.post(apiEndPoint, userCredentials, { headers })
+      .map(res => this.processHTTPMsgService.extractData(res))
+      .catch(error => this.processHTTPMsgService.handleError(error));
+  }
+
+  /**
+  * Retreves the user that matches the username storage.
+  * @param {void}
+  * @return {Observable<User>} API's response
+  */
+  getUser(username: string): Observable<User> {
+    console.log('Provider');
+
+    console.log(this.currentUser);
+
+    const apiEndPoint = baseUrl + 'users/';
+    return this.http.get<User>(apiEndPoint + username, { headers: httpOptions })
+      .map(res => this.processHTTPMsgService.extractData(res))
+      .catch(error => this.processHTTPMsgService.handleError(error));
+  }
+
+  putUser(username: string): Observable<string> {
+    console.log('Provider2');
+    const apiEndPoint = baseUrl + 'users/';
+    return this.http.put<String>(apiEndPoint + username, { headers: httpOptions })
+      .map(res => this.processHTTPMsgService.extractData(res))
+      .catch(error => this.processHTTPMsgService.handleError(error));
+  }
+
+  logOut( ):  Observable<Response> {
+    console.log('Provider33');
+    const apiEndPoint = baseUrl + 'login/';
+    return this.http.delete(apiEndPoint, { headers: httpOptions })
+      .map(res => this.processHTTPMsgService.extractData(res))
+      .catch(error => this.processHTTPMsgService.handleError(error));
   }
 
   /**
@@ -50,9 +93,9 @@ export class UserProvider {
     const headers = new HttpHeaders();
     headers.append('Content-Type', 'application/json');
     const apiEndPoint = baseUrl + 'users/';
-    return this.http.post(apiEndPoint, userCreate, {headers})
-        .map(res => this.processHTTPMsgService.extractData(res))
-        .catch(error => this.processHTTPMsgService.handleError(error));
+    return this.http.post(apiEndPoint, userCreate, { headers })
+      .map(res => this.processHTTPMsgService.extractData(res))
+      .catch(error => this.processHTTPMsgService.handleError(error));
   }
 
   /**

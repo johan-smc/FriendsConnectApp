@@ -6,7 +6,6 @@ import {StatusBar} from '@ionic-native/status-bar';
 import {IonicStorageModule} from '@ionic/storage';
 import {IonicApp, IonicErrorHandler, IonicModule} from 'ionic-angular';
 
-import {ActivityDetailPage} from '../pages/activity-detail/activity-detail';
 import {ContactPage} from '../pages/contact/contact';
 import {ForgotPasswordPage} from '../pages/forgot-password/forgot-password';
 import {ListActivitiesPage} from '../pages/list-activities/list-activities';
@@ -15,11 +14,15 @@ import {ProfilePage} from '../pages/profile/profile';
 import {RegistrarPage} from '../pages/registrar/registrar';
 import {TabsPage} from '../pages/tabs/tabs';
 import {ValidateCodePage} from '../pages/validate-code/validate-code';
+import {CommentsPage} from '../pages/comments/comments';
+
 import {ActivityProvider} from '../providers/activity/activity';
 import {ProcessHttpmsgProvider} from '../providers/process-httpmsg/process-httpmsg';
 import {UserProvider} from '../providers/user/user';
+import {EditProfilePage} from '../pages/edit-profile/edit-profile';
 
 import {MyApp} from './app.component';
+import { CommentProvider } from '../providers/comment/comment';
 
 @NgModule({
   declarations: [
@@ -29,10 +32,11 @@ import {MyApp} from './app.component';
     LoginPage,
     RegistrarPage,
     ListActivitiesPage,
-    ActivityDetailPage,
     ProfilePage,
     ForgotPasswordPage,
     ValidateCodePage,
+    EditProfilePage,
+    CommentsPage,
   ],
   imports: [
     BrowserModule, IonicModule.forRoot(MyApp), HttpClientModule,
@@ -46,15 +50,17 @@ import {MyApp} from './app.component';
     TabsPage,
     RegistrarPage,
     ListActivitiesPage,
-    ActivityDetailPage,
     ProfilePage,
     ForgotPasswordPage,
     ValidateCodePage,
+    EditProfilePage,
+    CommentsPage,
   ],
   providers: [
     StatusBar, SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler}, UserProvider,
-    ProcessHttpmsgProvider, ActivityProvider
+    ProcessHttpmsgProvider, ActivityProvider,
+    CommentProvider
   ]
 })
 export class AppModule {

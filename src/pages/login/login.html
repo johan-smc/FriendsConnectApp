@@ -12,28 +12,44 @@
 
 </ion-header>
 
-
 <ion-content padding>
+
+  <ion-row>
+    <ion-col></ion-col>
+    <ion-col width-67 >
+      <img src="../../assets/imgs/logofriendsconnect.png" width="200px" />
+    </ion-col>
+    <ion-col></ion-col>
+  </ion-row>
+
   <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-    <ion-row>
-      <ion-item>
-        <ion-label stacked>Username</ion-label>
-        <ion-input formControlName="username" type="text"></ion-input>
-      </ion-item>
 
-      <ion-item>
-        <ion-label stacked>Password</ion-label>
-        <ion-input formControlName="password" type="password"></ion-input>
-      </ion-item>
-    </ion-row>
+      <ion-row>
+          <ion-col>
+            <ion-list inset>
 
-    <ion-row>
-      <ion-col>
-        <button ion-button round full type="submit" [disabled]="!loginForm.valid">Login</button>
-       
-      </ion-col>
-    </ion-row>
+                <ion-item>
+                    <ion-icon name="man" item-start></ion-icon>
+                    <ion-label color="Dark" floating>Username</ion-label>
+                    <ion-input formControlName="username" type="text"></ion-input>
+                  </ion-item>
+              
+                  <ion-item>
+                      <ion-icon name="lock" item-start></ion-icon>
+                    <ion-label color="Dark" floating>Password</ion-label>
+                    <ion-input formControlName="password" type="password"></ion-input>
+                  </ion-item>    
+            </ion-list>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+              <button ion-button round full type="submit" [disabled]="!loginForm.valid">Login</button>
+            </ion-col>
+          </ion-row>
+
   </form>
   <button ion-button block clear type="singup" (click)="onSignup()">Create New Account</button>
   <button ion-button block clear type="singup" (click)="onForgotPassword()">Forgot password</button>
 </ion-content>
+
