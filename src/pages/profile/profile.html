@@ -16,7 +16,7 @@
 <ion-content padding>
 
 
-  <h1 ion-text color="dark">PERFIL</h1>
+  <!--<h1 ion-text color="dark"></h1>-->
 
   <h5 alingn="text-center" ion-text color="dark">Nombre: {{dato1}}. </h5>
   <h5 ion-text color="dark">Correo: {{dato2}}.</h5>
@@ -24,7 +24,7 @@
   <h5 ion-text color="dark">Descripción: {{dato4}}.</h5>
 
   <p>
-    <button ion-button block round color="light" (click)="getDataProfile()">REFRESCAR</button>
+    <!--<button ion-button block round color="light" (click)="getDataProfile()">REFRESCAR</button>-->
   </p>
   <p>
     <button ion-button block round icon-start (click)="goEditProfile()">
@@ -33,7 +33,7 @@
     </button>
   </p>
   <p>
-    <button ion-button block color='danger' round icon-start (click)="getDataProfile()">
+    <button ion-button block color='danger' round icon-start (click)="singOut()">
       <ion-icon name='exit' is-active="false"></ion-icon>
       Cerrar sesion
     </button>

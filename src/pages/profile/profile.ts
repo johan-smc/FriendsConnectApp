@@ -3,7 +3,8 @@ import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angu
 import { UserProvider } from '../../providers/user/user';
 import { User } from '../../shared/user';
 import { Storage } from '@ionic/storage';
-import { EditProfilePage} from '../edit-profile/edit-profile';
+import { EditProfilePage } from '../edit-profile/edit-profile';
+import { LoginPage } from '../login/login';
 /**
  * Generated class for the ProfilePage page.
  *
@@ -34,16 +35,11 @@ export class ProfilePage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ProfilePage');
-    //this.dato1 = "Nombre: ";
-    //this.dato2 = "Correo: ";
-    //this.dato3 = "Username: ";
-    //this.dato4 = "Descripción: ";
-
+    this.getDataProfile();
 
   }
 
-  goEditProfile():void 
-  {
+  goEditProfile(): void {
     console.log("entre");
     this.navCtrl.push(EditProfilePage);
   }
@@ -54,54 +50,58 @@ export class ProfilePage {
     registerErrorAlert.present();
   }
 
-  getDataProfile(): void 
-  {
-    console.log('Boton');
-    
-    this.dato1="cambio1";
-    this.dato2="cambio2";
-    this.dato3="cambio3";
-    this.dato4="cambio4";
-    console.log("---" + this.dato1);
-    
-
+  getDataProfile(): void {
+    this.dato1 = "....";
+    this.dato2 = "....";
+    this.dato3 = "....";
+    this.dato4 = "....";
 
     this.storage.get('currentUser').then(user => {
-      if (user) 
-      {
-          this.user2 = user;
-          console.log('aaaaaaaaaa' + this.user2);
-          this.userProvider.getUser(this.user2.username).subscribe((resp) => {
+      if (user) {
+        this.user2 = user;
+        console.log('lololol' + this.user2.password);
+        this.userProvider.getUser(this.user2.username).subscribe((resp) => {
           this.user2 = resp;
           this.dato1 = this.user2.first_name + this.user2.last_name;
-          //this.dato2 = this.user2.email;
-          //this.dato3 = this.user2.username;
-          //this.dato4 = this.user2.profile.about_me;
+          this.dato2 = this.user2.email;
+          this.dato3 = this.user2.username;
+          this.dato4 = this.user2.profile.about_me;
 
         }, errmess => this.getErrorHandler(errmess));
       }
     });
   }
 
-  setDataProfile(): void
-  {
-    console.log('Boton2');
+  singOut(): void {
+    console.log("SingOut");
+    console.log(this.user2.password);
+    var s: string;
+    this.userProvider.logOut().subscribe((resp) => {
+      //s = resp;
+      console.log(resp);
+      this.navCtrl.setRoot(LoginPage);
+      this.navCtrl.popToRoot();
+    }, errmess => this.getErrorHandler(errmess));
+
+    //this.navCtrl.goToRoot();
+    //this.navCtrl.popToRoot();
+    //this.navCtrl.push(LoginPage);
+    console.log("SingOut22");
+
+  }
+
+  setDataProfile(): void {
     var tempUser: User;
     tempUser = this.user2;
-    console.log('11111' + tempUser);
-    tempUser.first_name = 'pipi';
-    tempUser.last_name = 'loco';
-    console.log('22222' + tempUser);
-
+    //tempUser.first_name = 'pipi';
+    //tempUser.last_name = 'loco';
     this.storage.get('currentUser').then(user => {
-      if (user) 
-      {
-          var s : string;
-          this.user2 = user;
-          console.log('aaaaaaaaaa' + tempUser.username);
-          this.userProvider.putUser(tempUser.username).subscribe((resp) => {
-            s = resp;
-            console.log(s);
+      if (user) {
+        var s: string;
+        this.user2 = user;
+        this.userProvider.putUser(tempUser.username).subscribe((resp) => {
+          s = resp;
+          console.log(s);
         }, errmess => this.getErrorHandler(errmess));
       }
     });
