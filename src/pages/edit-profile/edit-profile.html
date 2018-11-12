@@ -16,19 +16,43 @@
 <ion-content padding>
 
 
-  <form [formGroup]="myForm" (ngSubmit)="saveData()">
+
+
+
+  <form [formGroup]="myForm" (ngSubmit)="setDataProfile()">
     <ion-item>
       <ion-icon name="person" item-start></ion-icon>
-      <ion-label stacked>Nombres:</ion-label>
-      <ion-input formControlName="first_name" type="text" placeholder="Nombres.."></ion-input>
+      <ion-label stacked>First name:</ion-label>
+      <ion-input formControlName="first_name" type="text" [(ngModel)]="nameuser"></ion-input>
     </ion-item>
     <ion-item>
       <ion-icon name="person" item-start></ion-icon>
-      <ion-label stacked>Apellidos:</ion-label>
-      <ion-input formControlName="last_name" type="text" placeholder="Apellidos.."></ion-input>
+      <ion-label stacked>Last name:</ion-label>
+      <ion-input formControlName="last_name" type="text" [(ngModel)]="lastnameuser"></ion-input>
     </ion-item>
-    <button ion-button round full type="submit" [disabled]="!myForm.valid">Login</button>
+    <ion-item>
+      <ion-icon name="contact" item-start></ion-icon>
+      <ion-label stacked>About me:</ion-label>
+      <ion-input formControlName="about_me" type="text" [(ngModel)]="aboutme"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-icon name="lock" item-start></ion-icon>
+      <ion-label stacked>Password:</ion-label>
+      <ion-input formControlName="password" type="password" [(ngModel)]="pass"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-icon name="lock" item-start></ion-icon>
+      <ion-label stacked>Re-Password:</ion-label>
+      <ion-input formControlName="repassword" type="password"></ion-input>
+    </ion-item>
+    <button ion-button round full type="submit" [disabled]="!myForm.valid">Edit</button>
   </form>
+  <p>
+      <button ion-button block color='danger' round icon-start (click)="saveData()">
+        <ion-icon name='trash' is-active="false"></ion-icon>
+        delete account
+      </button>
+    </p>
 
 
 </ion-content>

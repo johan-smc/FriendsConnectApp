@@ -90,21 +90,4 @@ export class ProfilePage {
 
   }
 
-  setDataProfile(): void {
-    var tempUser: User;
-    tempUser = this.user2;
-    //tempUser.first_name = 'pipi';
-    //tempUser.last_name = 'loco';
-    this.storage.get('currentUser').then(user => {
-      if (user) {
-        var s: string;
-        this.user2 = user;
-        this.userProvider.putUser(tempUser.username).subscribe((resp) => {
-          s = resp;
-          console.log(s);
-        }, errmess => this.getErrorHandler(errmess));
-      }
-    });
-
-  }
 }
