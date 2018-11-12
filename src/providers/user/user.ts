@@ -9,7 +9,7 @@ import {Observable} from 'rxjs/Observable';
 
 import {baseUrl} from '../../shared/baseurl';
 import {User} from '../../shared/user';
-import {ForgotPasswordData} from '../../shared/forgotPasswordData'
+import {ForgotPasswordData} from '../../shared/forgotPasswordData';
 import {ProcessHttpmsgProvider} from '../process-httpmsg/process-httpmsg';
 import {httpOptions} from '../../shared/httpOptions';
 
@@ -85,7 +85,7 @@ export class UserProvider {
    * @param {email} String email of user.
    * @return {Observable<Response>} API's response.
    */
-  fogotPassword(email: String): Observable<Response> {
+  fogotPassword(email: string): Observable<Response> {
     let headers = new HttpHeaders();
     headers = headers.append('Content-Type', 'application/json');
     const apiEndPoint = baseUrl + 'users/' +email + '/reset_password';
@@ -115,7 +115,7 @@ export class UserProvider {
    * @param {code} String email of user.
    * @return {Observable<Response>} API's response.
    */
-  validateCode(code: String): Observable<Response> {
+  validateCode(code: string): Observable<Response> {
     const apiEndPoint = baseUrl + 'users/' + '--' + '/validate/'+ code;
     return this.http.get(apiEndPoint, {headers: httpOptions})
         .map(res => this.processHTTPMsgService.extractData(res))

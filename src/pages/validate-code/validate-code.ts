@@ -17,7 +17,7 @@ import {UserProvider} from '../../providers/user/user';
 })
 export class ValidateCodePage {
 
-  private code : String;
+  private code : string;
   validateCodeForm : FormGroup;
   
   constructor(
