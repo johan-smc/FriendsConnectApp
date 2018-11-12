@@ -17,6 +17,7 @@ import {CommentsPage} from '../pages/comments/comments';
 import {ActivityProvider} from '../providers/activity/activity';
 import {ProcessHttpmsgProvider} from '../providers/process-httpmsg/process-httpmsg';
 import {UserProvider} from '../providers/user/user';
+import {EditProfilePage} from '../pages/edit-profile/edit-profile';
 
 import {MyApp} from './app.component';
 import { CommentProvider } from '../providers/comment/comment';
@@ -30,6 +31,7 @@ import { CommentProvider } from '../providers/comment/comment';
     RegistrarPage,
     ListActivitiesPage,
     ProfilePage,
+    EditProfilePage,
     CommentsPage,
   ],
   imports: [
@@ -45,6 +47,7 @@ import { CommentProvider } from '../providers/comment/comment';
     RegistrarPage,
     ListActivitiesPage,
     ProfilePage,
+    EditProfilePage,
     CommentsPage,
   ],
   providers: [
