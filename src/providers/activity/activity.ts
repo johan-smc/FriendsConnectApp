@@ -59,6 +59,19 @@ export class ActivityProvider {
   }
 
   /**
+   * Un subscribes the activity to the current logged user.
+   * @param {number} activityId Activity's ID
+   * @param {string} username current user username
+   * @return {Observable<Activity>} API's response
+   */
+  unSubscribeToActivity(activityId: number, username: string): Observable<Activity> {
+    const endPoint = baseUrl + 'users/' + username + '/activities/' + activityId;
+    return this.http.delete(endPoint, {headers: httpOptions})
+      .map(res => this.processHTTPMsgService.extractData(res))
+      .catch(error => this.processHTTPMsgService.handleError(error));
+  }
+
+  /**
    * Retreves the suscribe activies with the username sent in the parameters.
    * @param {string} username User username
    * @return {Observable<Activity[]>} API's response
