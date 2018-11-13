@@ -53,7 +53,7 @@ export class ListActivitiesPage {
    */
   getAllActivitiesErrorHandler(errmess): void {
     const registerErrorAlert = this.alertCtrl.create(
-      { title: 'Ups...', subTitle: errmess.message, buttons: ['Dismiss'] });
+      { title: 'Ups...', subTitle: errmess.error, buttons: ['Dismiss'] });
     registerErrorAlert.present();
   }
 
