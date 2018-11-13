@@ -24,6 +24,7 @@ import {MyActivitiesPage} from '../pages/my-activities/my-activities';
 
 import {MyApp} from './app.component';
 import { CommentProvider } from '../providers/comment/comment';
+import { HttpOptionsProvider } from '../providers/http-options/http-options';
 
 @NgModule({
   declarations: [
@@ -63,7 +64,8 @@ import { CommentProvider } from '../providers/comment/comment';
     StatusBar, SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler}, UserProvider,
     ProcessHttpmsgProvider, ActivityProvider,
-    CommentProvider
+    CommentProvider,
+    HttpOptionsProvider
   ]
 })
 export class AppModule {

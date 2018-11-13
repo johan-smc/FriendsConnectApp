@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, App } from 'ionic-angular';
 import { UserProvider } from '../../providers/user/user';
 import { User } from '../../shared/user';
 import { Storage } from '@ionic/storage';
@@ -30,7 +30,8 @@ export class ProfilePage {
     public navCtrl: NavController,
     public navParams: NavParams,
     private userProvider: UserProvider,
-    private storage: Storage
+    private storage: Storage,
+    private app : App,
   ) { }
 
   ionViewDidLoad() {
@@ -73,21 +74,10 @@ export class ProfilePage {
   }
 
   singOut(): void {
-    console.log("SingOut");
-    console.log(this.user2.password);
-    var s: string;
     this.userProvider.logOut().subscribe((resp) => {
-      //s = resp;
-      console.log(resp);
-      this.navCtrl.setRoot(LoginPage);
-      this.navCtrl.popToRoot();
+      this.app.getRootNav().setRoot(LoginPage);
+      this.userProvider.deleteToken();
     }, errmess => this.getErrorHandler(errmess));
-
-    //this.navCtrl.goToRoot();
-    //this.navCtrl.popToRoot();
-    //this.navCtrl.push(LoginPage);
-    console.log("SingOut22");
-
   }
 
 }

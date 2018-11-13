@@ -4,8 +4,8 @@ import { Observable } from 'rxjs/Observable';
 
 import { Comment } from '../../shared/comment';
 import { baseUrl } from '../../shared/baseurl';
-import { httpOptions } from '../../shared/httpOptions';
 import { ProcessHttpmsgProvider } from '../process-httpmsg/process-httpmsg';
+import {HttpOptionsProvider} from '../http-options/http-options';
 
 /*
   Generated class for the CommentProvider provider.
@@ -18,7 +18,8 @@ export class CommentProvider {
 
   constructor(
     public http: HttpClient,
-    private processHTTPMsgService: ProcessHttpmsgProvider
+    private processHTTPMsgService: ProcessHttpmsgProvider,
+    private httpOptionsService: HttpOptionsProvider,
   ) { }
 
   /**
@@ -26,7 +27,7 @@ export class CommentProvider {
    * @return {Observable<Comment[]>} API's response
    */
   getAllActivitiyComments(activityId: number): Observable<Comment[]> {
-    return this.http.get<Comment[]>(this.getEndPoint(activityId), { headers: httpOptions })
+    return this.http.get<Comment[]>(this.getEndPoint(activityId), { headers: this.httpOptionsService.getHttpOptions() })
       .map(res => this.processHTTPMsgService.extractData(res))
       .catch(error => this.processHTTPMsgService.handleError(error));
   }
@@ -38,7 +39,7 @@ export class CommentProvider {
    * @return API's response
    */
   createComment(activityId: number, comment: Comment): Observable<Response> {
-    return this.http.post(this.getEndPoint(activityId), comment, {headers: httpOptions})
+    return this.http.post(this.getEndPoint(activityId), comment, {headers: this.httpOptionsService.getHttpOptions()})
       .map(res => this.processHTTPMsgService.extractData(res))
       .catch(error => this.processHTTPMsgService.handleError(error));
   }
