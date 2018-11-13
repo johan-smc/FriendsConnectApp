@@ -118,6 +118,8 @@ export class EditProfilePage {
     console.log("INICIAL "+tempUser);
     
     tempUser.first_name = this.nameuser;
+    console.log("2222");
+
     tempUser.last_name = this.lastnameuser;
     tempUser.profile.about_me = this.aboutme;
     console.log("FINAL "+tempUser);
@@ -126,7 +128,7 @@ export class EditProfilePage {
       if (user) {
         var s: string;
         this.userClass = user;
-        this.userProvider.putUser(tempUser.username).subscribe((resp) => {
+        this.userProvider.putUser(tempUser.username, tempUser).subscribe((resp) => {
           s = resp;
           console.log(s);
         }, errmess => this.getErrorHandler(errmess));

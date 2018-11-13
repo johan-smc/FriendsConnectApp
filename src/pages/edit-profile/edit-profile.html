@@ -14,11 +14,6 @@
 
 
 <ion-content padding>
-
-
-
-
-
   <form [formGroup]="myForm" (ngSubmit)="setDataProfile()">
     <ion-item>
       <ion-icon name="person" item-start></ion-icon>
@@ -43,7 +38,7 @@
     <ion-item>
       <ion-icon name="lock" item-start></ion-icon>
       <ion-label stacked>Re-Password:</ion-label>
-      <ion-input formControlName="repassword" type="password"></ion-input>
+      <ion-input formControlName="repassword" type="password" [(ngModel)]="pass"></ion-input>
     </ion-item>
     <button ion-button round full type="submit" [disabled]="!myForm.valid">Edit</button>
   </form>

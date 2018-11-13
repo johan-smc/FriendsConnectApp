@@ -7,11 +7,11 @@ import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { Observable } from 'rxjs/Observable';
 
-import {baseUrl} from '../../shared/baseurl';
-import {ForgotPasswordData} from '../../shared/forgotPasswordData';
-import {User} from '../../shared/user';
-import {ProcessHttpmsgProvider} from '../process-httpmsg/process-httpmsg';
-import {HttpOptionsProvider} from '../http-options/http-options';
+import { baseUrl } from '../../shared/baseurl';
+import { ForgotPasswordData } from '../../shared/forgotPasswordData';
+import { User } from '../../shared/user';
+import { ProcessHttpmsgProvider } from '../process-httpmsg/process-httpmsg';
+import { HttpOptionsProvider } from '../http-options/http-options';
 /**
  * A manager for the request to login, register, logout and
  * all the services provided by the API that include users.
@@ -67,15 +67,18 @@ export class UserProvider {
       .catch(error => this.processHTTPMsgService.handleError(error));
   }
 
-  putUser(username: string): Observable<string> {
+  putUser(username: string, Editeduser: User): Observable<string> {
     console.log('Provider2');
     const apiEndPoint = baseUrl + 'users/';
-    return this.http.put<String>(apiEndPoint + username, { headers: this.httpOptionsService.getHttpOptions() })
+    console.log(Editeduser);
+    delete Editeduser.username;
+    console.log(Editeduser);
+    return this.http.put<string>(apiEndPoint + username, Editeduser, { headers: this.httpOptionsService.getHttpOptions() })
       .map(res => this.processHTTPMsgService.extractData(res))
       .catch(error => this.processHTTPMsgService.handleError(error));
   }
 
-  logOut( ):  Observable<Response> {
+  logOut(): Observable<Response> {
     console.log('Provider33');
     const apiEndPoint = baseUrl + 'login/';
     return this.http.delete(apiEndPoint, { headers: this.httpOptionsService.getHttpOptions() })
@@ -138,9 +141,9 @@ export class UserProvider {
     let headers = new HttpHeaders();
     headers = headers.append('Content-Type', 'application/json');
     const apiEndPoint = baseUrl + 'users/' + email + '/reset_password';
-    return this.http.get(apiEndPoint, {headers})
-        .map(res => this.processHTTPMsgService.extractData(res))
-        .catch(error => this.processHTTPMsgService.handleError(error));
+    return this.http.get(apiEndPoint, { headers })
+      .map(res => this.processHTTPMsgService.extractData(res))
+      .catch(error => this.processHTTPMsgService.handleError(error));
   }
 
   /**
@@ -153,9 +156,9 @@ export class UserProvider {
     let headers = new HttpHeaders();
     headers = headers.append('Content-Type', 'application/json');
     const apiEndPoint = baseUrl + 'users/' + data.email + '/reset_password';
-    return this.http.post(apiEndPoint, data, {headers})
-        .map(res => this.processHTTPMsgService.extractData(res))
-        .catch(error => this.processHTTPMsgService.handleError(error));
+    return this.http.post(apiEndPoint, data, { headers })
+      .map(res => this.processHTTPMsgService.extractData(res))
+      .catch(error => this.processHTTPMsgService.handleError(error));
   }
 
   /**
@@ -166,9 +169,9 @@ export class UserProvider {
    */
   validateCode(user: string, code: string): Observable<Response> {
     const apiEndPoint = baseUrl + 'users/' + user + '/validate/' + code;
-    return this.http.get(apiEndPoint, {headers: this.httpOptionsService.getHttpOptions()})
-        .map(res => this.processHTTPMsgService.extractData(res))
-        .catch(error => this.processHTTPMsgService.handleError(error));
+    return this.http.get(apiEndPoint, { headers: this.httpOptionsService.getHttpOptions() })
+      .map(res => this.processHTTPMsgService.extractData(res))
+      .catch(error => this.processHTTPMsgService.handleError(error));
   }
 
   /**
@@ -179,8 +182,8 @@ export class UserProvider {
    */
   reSendValidateCode(user: string): Observable<Response> {
     const apiEndPoint = baseUrl + 'users/' + user + '/validate';
-    return this.http.get(apiEndPoint, {headers: this.httpOptionsService.getHttpOptions()})
-        .map(res => this.processHTTPMsgService.extractData(res))
-        .catch(error => this.processHTTPMsgService.handleError(error));
+    return this.http.get(apiEndPoint, { headers: this.httpOptionsService.getHttpOptions() })
+      .map(res => this.processHTTPMsgService.extractData(res))
+      .catch(error => this.processHTTPMsgService.handleError(error));
   }
 }
