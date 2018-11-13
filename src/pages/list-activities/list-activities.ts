@@ -75,16 +75,49 @@ export class ListActivitiesPage {
     this.storage.get('user').then(user => {
       this.activityProvider.subscribeToActivity(activityId, user.username).subscribe((resp) => {
         this.showConfirmSubscriptionToast();
+        this.changeActivityInUnSuscribe(activityId, -1, true);
       }, errmess => this.getAllActivitiesErrorHandler(errmess));
     });
   }
 
+
+  unSubscribeHandler(activityId: number): void {
+    this.storage.get('user').then(user => {
+      this.activityProvider.unSubscribeToActivity(activityId, user.username).subscribe((resp) => {
+        this.showConfirmUnSubscriptionToast();
+        this.changeActivityInUnSuscribe(activityId, resp.participants, false);
+      }, errmess => this.getAllActivitiesErrorHandler(errmess));
+    });
+  }
+  /**
+   * Change activity participants in un suscribe
+   * @param activityId 
+   */
+  changeActivityInUnSuscribe(activityId: number, participants: number, isParticipant: boolean): void {
+    let activity = this.activities.find(item => item.id === activityId);
+    activity.participants = participants;
+    activity.is_current_user_subscribed = isParticipant;
+    activity = this.showedActivities.find(item => item.id === activityId );
+    activity.participants = participants;
+    activity.is_current_user_subscribed=isParticipant;
+  }
   /**
    * Shows a confirmation if the subscription is successful.
    */
   private showConfirmSubscriptionToast(): void {
     const toast = this.toastCtrl.create({
       message: 'Subscription successfully',
+      duration: 3000,
+      position: 'middle'
+    });
+    toast.present();
+  }
+  /**
+   * Shows a confirmation if the un subscription is successful.
+   */
+  private showConfirmUnSubscriptionToast(): void {
+    const toast = this.toastCtrl.create({
+      message: 'Un Subscription successfully',
       duration: 3000,
       position: 'middle'
     });

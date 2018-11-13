@@ -20,6 +20,7 @@ import {ActivityProvider} from '../providers/activity/activity';
 import {ProcessHttpmsgProvider} from '../providers/process-httpmsg/process-httpmsg';
 import {UserProvider} from '../providers/user/user';
 import {EditProfilePage} from '../pages/edit-profile/edit-profile';
+import {MyActivitiesPage} from '../pages/my-activities/my-activities';
 
 import {MyApp} from './app.component';
 import { CommentProvider } from '../providers/comment/comment';
@@ -37,6 +38,7 @@ import { CommentProvider } from '../providers/comment/comment';
     ValidateCodePage,
     EditProfilePage,
     CommentsPage,
+    MyActivitiesPage,
   ],
   imports: [
     BrowserModule, IonicModule.forRoot(MyApp), HttpClientModule,
@@ -55,6 +57,7 @@ import { CommentProvider } from '../providers/comment/comment';
     ValidateCodePage,
     EditProfilePage,
     CommentsPage,
+    MyActivitiesPage,
   ],
   providers: [
     StatusBar, SplashScreen,
