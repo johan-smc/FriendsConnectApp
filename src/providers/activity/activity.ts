@@ -57,4 +57,26 @@ export class ActivityProvider {
       .map(res => this.processHTTPMsgService.extractData(res))
       .catch(error => this.processHTTPMsgService.handleError(error));
   }
+
+  /**
+   * Retreves the suscribe activies with the username sent in the parameters.
+   * @param {string} username User username
+   * @return {Observable<Activity[]>} API's response
+   */
+  getMyActivities(username: string): Observable<Activity[]> {
+    return this.http.get<Activity>(baseUrl+'users/' + username+ '/activities', {headers: httpOptions})
+        .map(res => this.processHTTPMsgService.extractData(res))
+        .catch(error => this.processHTTPMsgService.handleError(error));
+  }
+
+  /**
+   * Retreves the own activies with the username sent in the parameters.
+   * @param {string} username User username
+   * @return {Observable<Activity>} API's response
+   */
+  getOwnActivities(username: string): Observable<Activity[]> {
+    return this.http.get<Activity>(baseUrl+'users/' + username+ '/activities/own', {headers: httpOptions})
+        .map(res => this.processHTTPMsgService.extractData(res))
+        .catch(error => this.processHTTPMsgService.handleError(error));
+  }
 }
