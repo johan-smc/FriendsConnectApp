@@ -35,6 +35,16 @@ export class ActivityProvider {
   }
 
   /**
+   * Send activity to create in data base.
+   * @return {Observable<Response>} API's response
+   */
+  postActivity(activity: Activity): Observable<Response> {
+    return this.http.post<Activity[]>(this.END_POINT,activity, {headers: httpOptions})
+        .map(res => this.processHTTPMsgService.extractData(res))
+        .catch(error => this.processHTTPMsgService.handleError(error));
+  }
+
+  /**
    * Retreves the activity that matches the id sent in the parameters.
    * @param {number} id Activity's ID
    * @return {Observable<Activity>} API's response
