@@ -38,7 +38,7 @@
             <ion-icon name="add-circle"></ion-icon>
             {{activity.max_participants - activity.participants}} Sits
           </button>
-          <button (click)="unSubscribeHandler(activity.id)" ion-button color="danger" clear small icon-start *ngIf="activity.is_current_user_subscribed">
+          <button (click)="unSubscribeHandler(activity.id)" ion-button color="danger" clear small icon-start *ngIf="activity.is_current_user_subscribed" [disabled]='user && user.username === activity.author'>
               <ion-icon name="remove-circle"></ion-icon>
               leave
             </button>

@@ -7,6 +7,7 @@ import { ActivityProvider } from '../../providers/activity/activity';
 import { Activity} from '../../shared/activity';
 import { ToastController } from 'ionic-angular';
 import { CommentsPage } from '../comments/comments';
+import { User } from '../../shared/user';
 
 /**
  * Generated class for the ListActivitiesPage page.
@@ -23,15 +24,26 @@ import { CommentsPage } from '../comments/comments';
 export class ListActivitiesPage {
   private activities: Activity[]; // all activities
   showedActivities: Activity[]; // activities to show in view
+  user: User;
   constructor(
     private activityProvider: ActivityProvider,
     private storage: Storage,
     private toastCtrl: ToastController,
     private alertCtrl: AlertController,
     private modalCtrl: ModalController
-  ) { }
+  ) { 
+    this.loadUser();
+  }
 
   ionViewDidLoad() {
+  }
+  loadUser(): void {
+    this.storage.get('user').then(user => {
+      this.user = user;
+      console.log(this.user);
+    });
+  }
+  ionViewWillEnter(){
     this.initializeActivities();
   }
 
