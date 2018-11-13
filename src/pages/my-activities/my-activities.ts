@@ -4,8 +4,9 @@ import { Activity } from '../../shared/activity';
 import {AlertController} from 'ionic-angular';
 import {ToastController} from 'ionic-angular';
 import {Storage} from '@ionic/storage';
-
+import { ModalController } from 'ionic-angular';
 import { ActivityProvider } from '../../providers/activity/activity';
+import { CommentsPage } from '../comments/comments';
 /**
  * Generated class for the MyActivitiesPage page.
  *
@@ -31,6 +32,7 @@ export class MyActivitiesPage {
     public toastCtrl: ToastController,
     private storage: Storage,
     private activityProvider: ActivityProvider,
+    private modalCtrl: ModalController,
   ) {
     this.showedActivities = [];
     this.setDefaultActivities();
@@ -114,5 +116,43 @@ export class MyActivitiesPage {
     } else {
       this.showedActivities = Object.assign([], this.activities);
     }
+  }
+  unSubscribeHandler(activityId: number): void {
+    this.storage.get('user').then(user => {
+      this.activityProvider.unSubscribeToActivity(activityId, user.username).subscribe((resp) => {
+        this.showConfirmUnSubscriptionToast();
+        this.deleteActivity(activityId);
+      }, errmess => this.ErrorHandler(errmess));
+    });
+  }
+  editActivityHandler(activityId: number): void {
+    console.log("edit.....");
+  }
+  /**
+   * Shows a confirmation if the un subscription is successful.
+   */
+  private showConfirmUnSubscriptionToast(): void {
+    const toast = this.toastCtrl.create({
+      message: 'Un Subscription successfully',
+      duration: 3000,
+      position: 'middle'
+    });
+    toast.present();
+  }
+  /**
+   * Delete activity in list of activities
+   * @param activityId 
+   */
+  deleteActivity(activityId: number): void {
+    let activity = this.activities.find(item => item.id === activityId);
+    let index = this.activities.indexOf(activity);
+    this.activities.splice(index, 1);
+    activity = this.showedActivities.find(item => item.id === activityId );
+    index = this.showedActivities.indexOf(activity);
+    this.showedActivities.splice(index, 1);
+  }
+  openCommentModal(activityId: number) {
+    const commetModal = this.modalCtrl.create(CommentsPage, { activityId: activityId } );
+    commetModal.present();
   }
 }
