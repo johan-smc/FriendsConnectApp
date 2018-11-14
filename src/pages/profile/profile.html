@@ -24,8 +24,9 @@
 
   <ion-row>
       <ion-col></ion-col>
-      <ion-col width-67 >
-        <img src="../../assets/imgs/useravatar.png" width="200px" />
+      <ion-col width-67 *ngIf="user2 && user2.profile">
+          <img [src]="'data:image/jpeg;base64,' + user2.profile.image" *ngIf="user2.profile.image">
+          <img src="../../assets/imgs/useravatar.png" width="200px" *ngIf="!user2.profile.image">
       </ion-col>
       <ion-col></ion-col>
     </ion-row>

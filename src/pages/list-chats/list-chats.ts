@@ -87,7 +87,9 @@ export class ListChatsPage {
   onChatSelected(chat)
   {
     console.log(chat);
-    this.navCtrl.push(ConversationPage);
+    this.navCtrl.push(ConversationPage, {
+      data: chat.name
+    });
   }
 
 }

@@ -202,6 +202,7 @@ export class EditProfilePage {
         }
         else {
           console.log('ERROR!! Contraseña no coincide');
+          this.presentToast('ERROR!! Contraseña incorrecta');
         }
         
       }
