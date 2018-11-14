@@ -20,6 +20,7 @@ import {MyActivitiesPage} from '../pages/my-activities/my-activities';
 import {ListChatsPage} from '../pages/list-chats/list-chats'
 import {ConversationPage} from '../pages/conversation/conversation'
 import {CreateActivityPage} from '../pages/create-activity/create-activity';
+import {EditActivityPage} from '../pages/edit-activity/edit-activity';
 
 import {ActivityProvider} from '../providers/activity/activity';
 import {ProcessHttpmsgProvider} from '../providers/process-httpmsg/process-httpmsg';
@@ -46,6 +47,7 @@ import { HttpOptionsProvider } from '../providers/http-options/http-options';
     MyActivitiesPage,
     ListChatsPage,
     ConversationPage,
+    EditActivityPage
   ],
   imports: [
     BrowserModule, IonicModule.forRoot(MyApp), HttpClientModule,
@@ -67,6 +69,7 @@ import { HttpOptionsProvider } from '../providers/http-options/http-options';
     MyActivitiesPage,
     ListChatsPage,
     ConversationPage,
+    EditActivityPage
   ],
   providers: [
     StatusBar, SplashScreen,

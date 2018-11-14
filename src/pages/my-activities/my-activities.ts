@@ -6,7 +6,7 @@ import {ToastController} from 'ionic-angular';
 import {Storage} from '@ionic/storage';
 import { ModalController } from 'ionic-angular';
 import { ActivityProvider } from '../../providers/activity/activity';
-import { CommentsPage } from '../comments/comments';
+import { EditActivityPage } from '../edit-activity/edit-activity';
 /**
  * Generated class for the MyActivitiesPage page.
  *
@@ -59,7 +59,7 @@ export class MyActivitiesPage {
    */
   ErrorHandler(errmess) {
     const registerErrorAlert = this.alertCtrl.create(
-        {title: 'Ups...', subTitle: 'Wrong code.', buttons: ['Dismiss']});
+        {title: 'Ups...', subTitle: 'Error loading activities.', buttons: ['Dismiss']});
     registerErrorAlert.present();
   }
   /**
@@ -70,7 +70,6 @@ export class MyActivitiesPage {
   {
     this.activities = activitiesTemp;
     this.showedActivities = Object.assign([], this.activities);
-    console.log(activitiesTemp);
     if( this.activities.length === 0 )
     {
       this.presentToast("No activities", 3000, "down");
@@ -137,7 +136,7 @@ export class MyActivitiesPage {
     });
   }
   editActivityHandler(activityId: number): void {
-    console.log("edit.....");
+    this.openEditModal(activityId);
   }
   /**
    * Shows a confirmation if the un subscription is successful.
@@ -162,13 +161,17 @@ export class MyActivitiesPage {
     index = this.showedActivities.indexOf(activity);
     this.showedActivities.splice(index, 1);
   }
-  openCommentModal(activityId: number) {
-    const commetModal = this.modalCtrl.create(CommentsPage, { activityId: activityId });
+
+  /**
+   * Opens a modal that has a form to edit the activity.
+   * @param activityId ID of activity to edit
+   */
+  private openEditModal(activityId: number) {
+    const commetModal = this.modalCtrl.create(EditActivityPage, { activityId: activityId });
     commetModal.onDidDismiss(data => {
       this.activities.find(item => item.id === activityId).comments = data;
       this.showedActivities.find(item => item.id === activityId).comments = data;
     });
     commetModal.present();
-
   }
 }

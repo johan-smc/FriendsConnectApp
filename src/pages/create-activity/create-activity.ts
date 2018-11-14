@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController, AlertController, ActionSheetController } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-// import { Activity } from '../../shared/activity';
 import { ActivityProvider } from '../../providers/activity/activity';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 
@@ -82,7 +81,9 @@ export class CreateActivityPage {
    * Creates a new activiy and stores it in the data base.
    */
   postActivity() {
-    const newActivity = this.createActivityForm.value;
+    let newActivity = this.createActivityForm.value;
+    console.log('Form Value: ', this.createActivityForm.value);
+    
     newActivity.begin_date = this.formatDate(new Date(this.createActivityForm.value.begin_date + ' ' + this.createActivityForm.value.begin_time));
     newActivity.end_date = this.formatDate(new Date(this.createActivityForm.value.end_date + ' ' + this.createActivityForm.value.end_time));
     delete newActivity.begin_time;
@@ -161,6 +162,8 @@ export class CreateActivityPage {
           + ':' + date.getMinutes()
           + utcSign
           + '0' + utc;
+    console.log('Formated Date: ', dateFormated);
+    
     return dateFormated;
   }
 
