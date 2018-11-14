@@ -89,10 +89,25 @@ export class CreateActivityPage {
     delete newActivity.begin_time;
     delete newActivity.end_time;
     this.activityProvider.postActivity(newActivity).subscribe((resp) => {
-      this.presentToast();
       this.createActivityForm.reset();
-      this.previewImage = this.imgPlaceHolder;
+      if(this.previewImage !== this.previewImage) {
+        this.postImageToActivity(resp.id);
+      } else {
+        this.presentToast();
+      }
+
     }, errmess => this.postActivitiesErrorHandler(errmess));
+  }
+  
+  /**
+   * Sends the image to the data base.
+   * @param {number} activityId ID of activity
+   */
+  private postImageToActivity(activityId: number):void {
+    this.activityProvider.postImageToActivity(activityId, this.previewImage).subscribe((resp) => {
+      this.presentToast();
+      this.previewImage = this.imgPlaceHolder;
+    });
   }
 
   /**
