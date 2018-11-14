@@ -24,10 +24,6 @@ export class EditActivityPage {
   editActivityForm: FormGroup;
   activity: Activity;
 
-  begin_date: string;
-  begin_time: string;
-  end_date: string;
-  end_time: string;
 
   constructor(
     public navCtrl: NavController, 
@@ -55,8 +51,6 @@ export class EditActivityPage {
         begin_time: this.activity.begin_date,
         end_time: this.activity.end_date
       });
-      this.begin_time = this.begin_date = this.activity.begin_date;
-      this.end_time = this.end_date = this.activity.end_date;
     });
   }
 
@@ -64,12 +58,9 @@ export class EditActivityPage {
    * Sends the new information of the activity to the provider.
    */
   updateActivity():void {
-    console.log('Begin', this.begin_date, this.begin_time);
-    console.log('End', this.end_date, this.end_time);
     
     let newActivity = this.editActivityForm.value;
-    newActivity.begin_date = this.formatDate(new Date(this.begin_date + ' ' + this.begin_time));
-    newActivity.end_date = this.formatDate(new Date(this.end_date + ' ' + this.end_time));
+    console.log(newActivity);
     delete newActivity.begin_time;
     delete newActivity.end_time;
     newActivity.id = this.navParams.get('activityId');

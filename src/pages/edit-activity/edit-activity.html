@@ -34,39 +34,40 @@
       </ion-row>
     </ion-card>
     <ion-card>
+      <ion-card-header>
+        Begin Date
+      </ion-card-header>
+      <ion-card-content>
+        <ion-item>
+          <ion-label>Begin Date</ion-label>
+          <ion-datetime formControlName="begin_date" displayFormat="MMM DD, YYYY"></ion-datetime>
+        </ion-item>
+        <ion-item>
+          <ion-label>Begin Time</ion-label>
+          <ion-datetime formControlName="begin_time" displayFormat="hh:mm A"></ion-datetime>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+    <ion-card>
+      <ion-card-header>
+        End Date
+      </ion-card-header>
+      <ion-card-content>
+        <ion-item>
+          <ion-label>End Date</ion-label>
+          <ion-datetime formControlName="end_date" displayFormat="MMM DD, YYYY"></ion-datetime>
+        </ion-item>
+        <ion-item>
+          <ion-label>End Time</ion-label>
+          <ion-datetime formControlName="end_time" displayFormat="hh:mm A"></ion-datetime>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+    <ion-card>
       <ion-card-content>
         <ion-input formControlName="max_participants" type="number" placeholder="Max Participants"></ion-input>
       </ion-card-content>
     </ion-card>
   </form>
-  <ion-card>
-    <ion-card-header>
-      Begin Date
-    </ion-card-header>
-    <ion-card-content>
-      <ion-item>
-        <ion-label>Begin Date</ion-label>
-        <ion-datetime [(ngModel)]="begin_date" displayFormat="YYYY-MM-DDTHH:mm:ssTZD"></ion-datetime>
-      </ion-item>
-      <ion-item>
-        <ion-label>Begin Time</ion-label>
-        <ion-datetime [(ngModel)]="begin_time" displayFormat="hh:mm A"></ion-datetime>
-      </ion-item>
-    </ion-card-content>
-  </ion-card>
-  <ion-card>
-    <ion-card-header>
-      End Date
-    </ion-card-header>
-    <ion-card-content>
-      <ion-item>
-        <ion-label>End Date</ion-label>
-        <ion-datetime [(ngModel)]="end_date" displayFormat="MMM DD, YYYY"></ion-datetime>
-      </ion-item>
-      <ion-item>
-        <ion-label>End Time</ion-label>
-        <ion-datetime [(ngModel)]="end_time" displayFormat="hh:mm A"></ion-datetime>
-      </ion-item>
-    </ion-card-content>
-  </ion-card>
+  
 </ion-content>

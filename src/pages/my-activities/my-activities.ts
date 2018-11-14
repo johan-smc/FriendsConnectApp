@@ -167,11 +167,9 @@ export class MyActivitiesPage {
    * @param activityId ID of activity to edit
    */
   private openEditModal(activityId: number) {
-    const commetModal = this.modalCtrl.create(EditActivityPage, { activityId: activityId });
-    commetModal.onDidDismiss(data => {
-      this.activities.find(item => item.id === activityId).comments = data;
-      this.showedActivities.find(item => item.id === activityId).comments = data;
+    const editModal = this.modalCtrl.create(EditActivityPage, { activityId: activityId });
+    editModal.onDidDismiss(data => {
     });
-    commetModal.present();
+    editModal.present();
   }
 }
