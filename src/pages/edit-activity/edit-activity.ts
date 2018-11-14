@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ActionSheetController, ViewController, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController, ActionSheetController, ViewController, AlertController } from 'ionic-angular';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Activity } from '../../shared/activity';
@@ -29,6 +29,7 @@ export class EditActivityPage {
     public navCtrl: NavController, 
     public navParams: NavParams,
     private activityProvider: ActivityProvider,
+    private toastCtrl: ToastController,
     private camera: Camera,
     private actionSheetCtrl: ActionSheetController,
     private viewCtrl: ViewController,
@@ -58,13 +59,17 @@ export class EditActivityPage {
    * Sends the new information of the activity to the provider.
    */
   updateActivity():void {
-    
     let newActivity = this.editActivityForm.value;
     console.log(newActivity);
     delete newActivity.begin_time;
     delete newActivity.end_time;
     newActivity.id = this.navParams.get('activityId');
     this.activityProvider.updateActivity(newActivity).subscribe((resp) => {
+      if (this.previewImage !== this.previewImage) {
+        this.postImageToActivity(newActivity.id);
+      } else {
+        this.presentToast();
+      }
       this.viewCtrl.dismiss();
     }, errmess => this.updateActivitiesErrorHandler(errmess));
   }
@@ -77,6 +82,17 @@ export class EditActivityPage {
     const registerErrorAlert = this.alertCtrl.create(
       { title: 'Ups...', subTitle: errmess.error, buttons: ['Dismiss'] });
     registerErrorAlert.present();
+  }
+
+  /**
+   * Sends the image to the data base.
+   * @param {number} activityId ID of activity
+   */
+  private postImageToActivity(activityId: number): void {
+    this.activityProvider.postImageToActivity(activityId, this.previewImage).subscribe((resp) => {
+      this.presentToast();
+      this.previewImage = this.imgPlaceHolder;
+    });
   }
 
   /**
@@ -207,6 +223,15 @@ export class EditActivityPage {
       + utcSign
       + '0' + utc;
     return dateFormated;
+  }
+
+  presentToast(): void {
+    const toast = this.toastCtrl.create({
+      message: 'Yay!, Activity Updated',
+      duration: 3000,
+      position: 'top'
+    });
+    toast.present();
   }
 
 }

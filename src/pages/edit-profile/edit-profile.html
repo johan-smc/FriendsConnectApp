@@ -14,6 +14,13 @@
 
 
 <ion-content padding>
+  <ion-row>
+    <ion-col></ion-col>
+    <ion-col width-67>
+      <img (click)="presentActionSheet()" [src]="previewImage" width="200px" />
+    </ion-col>
+    <ion-col></ion-col>
+  </ion-row>
   <form [formGroup]="myForm" (ngSubmit)="setDataProfile()">
     <ion-item>
       <ion-icon name="person" item-start></ion-icon>
@@ -32,14 +39,19 @@
     </ion-item>
     <ion-item>
       <ion-icon name="lock" item-start></ion-icon>
-      <ion-label stacked>Password:</ion-label>
-      <ion-input formControlName="password" type="password" [(ngModel)]="pass"></ion-input>
+      <ion-label stacked>New Password:</ion-label>
+      <ion-input formControlName="newpassword" type="password" [(ngModel)]="newpass"></ion-input>
     </ion-item>
     <ion-item>
       <ion-icon name="lock" item-start></ion-icon>
-      <ion-label stacked>Re-Password:</ion-label>
-      <ion-input formControlName="repassword" type="password" ></ion-input>
+      <ion-label stacked>Again New Password:</ion-label>
+      <ion-input formControlName="renewpassword" type="password" [(ngModel)]="renewpass"></ion-input>
     </ion-item>
+    <ion-item>
+        <ion-icon name="lock" item-start></ion-icon>
+        <ion-label stacked>Password:</ion-label>
+        <ion-input formControlName="password" type="password" [(ngModel)]="pass"></ion-input>
+      </ion-item>
     <button ion-button round full type="submit" [disabled]="!myForm.valid">Edit</button>
   </form>
   <p>

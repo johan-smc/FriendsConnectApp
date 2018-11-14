@@ -20,10 +20,12 @@ import { LoginPage } from '../login/login';
 export class ProfilePage {
 
   private user2: User;
-  private dato1: string;
-  private dato2: string;
-  private dato3: string;
-  private dato4: string;
+  dato1: string;
+  dato2: string;
+  dato3: string;
+  dato4: string;
+  private readonly imgPlaceHolder = '../../assets/imgs/useravatar.png';
+  previewImage = this.imgPlaceHolder;
 
   private alertCtrl: AlertController;
   constructor(
@@ -68,6 +70,10 @@ export class ProfilePage {
         console.log('lololol' + this.user2.password);
         this.userProvider.getUser(this.user2.username).subscribe((resp) => {
           this.user2 = resp;
+          console.log('lll', this.user2);
+          console.log(this.user2.profile);
+          
+          
           this.dato1 = this.user2.first_name +' '+ this.user2.last_name;
           this.dato2 = this.user2.email;
           this.dato3 = this.user2.username;
