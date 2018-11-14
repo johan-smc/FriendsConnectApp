@@ -142,7 +142,6 @@ export class ListActivitiesPage {
       this.showedActivities.find(item => item.id === activityId).comments = data;
     });
     commetModal.present();
-    
   }
 
 }

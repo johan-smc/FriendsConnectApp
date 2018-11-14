@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController, AlertController, ActionSheetController } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-// import { Activity } from '../../shared/activity';
 import { ActivityProvider } from '../../providers/activity/activity';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 
@@ -82,16 +81,33 @@ export class CreateActivityPage {
    * Creates a new activiy and stores it in the data base.
    */
   postActivity() {
-    const newActivity = this.createActivityForm.value;
+    let newActivity = this.createActivityForm.value;
+    console.log('Form Value: ', this.createActivityForm.value);
+    
     newActivity.begin_date = this.formatDate(new Date(this.createActivityForm.value.begin_date + ' ' + this.createActivityForm.value.begin_time));
     newActivity.end_date = this.formatDate(new Date(this.createActivityForm.value.end_date + ' ' + this.createActivityForm.value.end_time));
     delete newActivity.begin_time;
     delete newActivity.end_time;
     this.activityProvider.postActivity(newActivity).subscribe((resp) => {
-      this.presentToast();
       this.createActivityForm.reset();
-      this.previewImage = this.imgPlaceHolder;
+      if(this.previewImage !== this.previewImage) {
+        this.postImageToActivity(resp.id);
+      } else {
+        this.presentToast();
+      }
+
     }, errmess => this.postActivitiesErrorHandler(errmess));
+  }
+  
+  /**
+   * Sends the image to the data base.
+   * @param {number} activityId ID of activity
+   */
+  private postImageToActivity(activityId: number):void {
+    this.activityProvider.postImageToActivity(activityId, this.previewImage).subscribe((resp) => {
+      this.presentToast();
+      this.previewImage = this.imgPlaceHolder;
+    });
   }
 
   /**
@@ -161,6 +177,8 @@ export class CreateActivityPage {
           + ':' + date.getMinutes()
           + utcSign
           + '0' + utc;
+    console.log('Formated Date: ', dateFormated);
+    
     return dateFormated;
   }
 

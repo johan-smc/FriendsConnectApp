@@ -18,8 +18,15 @@ import { HttpOptionsProvider } from '../http-options/http-options';
  */
 @Injectable()
 export class UserProvider {
-
   private currentUser: User;
+  
+  postImageToUser(username: string, image64: string): Observable<Response> {
+    const body = { image: image64 };
+    const apiEndPoint = baseUrl + 'users/' + username +'/images';
+    return this.http.put(apiEndPoint, body, { headers: this.httpOptionsService.getHttpOptions() })
+      .map(res => this.processHTTPMsgService.extractData(res))
+      .catch(error => this.processHTTPMsgService.handleError(error));
+  }
 
   constructor(
     public http: HttpClient,
@@ -31,8 +38,6 @@ export class UserProvider {
   setCurrentUser(user: User): void {
     this.currentUser = user;
   }
-
-  
 
   getCurrenUser(): User {
     return this.currentUser;

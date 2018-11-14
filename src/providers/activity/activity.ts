@@ -36,9 +36,9 @@ export class ActivityProvider {
 
   /**
    * Send activity to create in data base.
-   * @return {Observable<Response>} API's response
+   * @return {Observable<Activity>} API's response activity created
    */
-  postActivity(activity: Activity): Observable<Response> {
+  postActivity(activity: Activity): Observable<Activity> {
     return this.http.post<Response>(this.END_POINT,activity, {headers: this.httpOptionsService.getHttpOptions()})
         .map(res => this.processHTTPMsgService.extractData(res))
         .catch(error => this.processHTTPMsgService.handleError(error));
@@ -101,5 +101,30 @@ export class ActivityProvider {
     return this.http.get<Activity>(baseUrl+'users/' + username+ '/activities/own', {headers: this.httpOptionsService.getHttpOptions()})
         .map(res => this.processHTTPMsgService.extractData(res))
         .catch(error => this.processHTTPMsgService.handleError(error));
+  }
+
+  /**
+   * Updates the values of an activity
+   * @param {Activity} updatedActivity the new information.
+   */
+  updateActivity(updatedActivity: Activity): Observable<Response> {
+    console.log('Provider: ', updatedActivity);
+    console.log('ActivityId: ', updatedActivity.id);
+    
+    return this.http.put(this.END_POINT + updatedActivity.id, updatedActivity, { headers: this.httpOptionsService.getHttpOptions()})
+        .map(res => this.processHTTPMsgService.extractData(res))
+        .catch(error => this.processHTTPMsgService.handleError(error));
+  }
+
+  /**
+   * Assigns a image in base64 to an activity.
+   * @param {number} activityId ID of the activity to add image.
+   * @param {string} image64 new image
+   */
+  postImageToActivity(activityId: number, image64: string): Observable<Response> {
+    const body = {image: image64};
+    return this.http.put(this.END_POINT + activityId + '/images', body, { headers: this.httpOptionsService.getHttpOptions() })
+      .map(res => this.processHTTPMsgService.extractData(res))
+      .catch(error => this.processHTTPMsgService.handleError(error));
   }
 }
