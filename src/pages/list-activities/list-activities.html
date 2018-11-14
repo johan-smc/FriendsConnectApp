@@ -26,7 +26,8 @@
         <p>{{activity.begin_date | date}}</p>
       </ion-item>
       
-      <img [src]="'data:image/jpeg;base64,' + activity.image">
+      <img [src]="'data:image/jpeg;base64,' + activity.image" *ngIf="activity.image">
+      <img src="../../assets/imgs/activityDefault.png" width="200px" *ngIf="!activity.image">
       
       <ion-card-content>
         <p>{{activity.description}}</p>
