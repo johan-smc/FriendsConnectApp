@@ -9,10 +9,9 @@ import { Observable } from 'rxjs/Observable';
 
 import {baseUrl} from '../../shared/baseurl';
 import {ForgotPasswordData} from '../../shared/forgotPasswordData';
-import {httpOptions} from '../../shared/httpOptions';
 import {User} from '../../shared/user';
 import {ProcessHttpmsgProvider} from '../process-httpmsg/process-httpmsg';
-
+import {HttpOptionsProvider} from '../http-options/http-options';
 /**
  * A manager for the request to login, register, logout and
  * all the services provided by the API that include users.
@@ -26,6 +25,7 @@ export class UserProvider {
     public http: HttpClient,
     private processHTTPMsgService: ProcessHttpmsgProvider,
     private storage: Storage,
+    private httpOptionsService: HttpOptionsProvider,
   ) { }
 
   setCurrentUser(user: User): void {
@@ -52,17 +52,17 @@ export class UserProvider {
   }
 
   /**
-  * Retreves the user that matches the username storage.
-  * @param {void}
-  * @return {Observable<User>} API's response
-  */
+   * Retreves the user that matches the username storage.
+   * @param {void}
+   * @return {Observable<User>} API's response
+   */
   getUser(username: string): Observable<User> {
     console.log('Provider');
 
     console.log(this.currentUser);
 
     const apiEndPoint = baseUrl + 'users/';
-    return this.http.get<User>(apiEndPoint + username, { headers: httpOptions })
+    return this.http.get<User>(apiEndPoint + username, { headers: this.httpOptionsService.getHttpOptions() })
       .map(res => this.processHTTPMsgService.extractData(res))
       .catch(error => this.processHTTPMsgService.handleError(error));
   }
@@ -70,15 +70,15 @@ export class UserProvider {
   putUser(username: string): Observable<string> {
     console.log('Provider2');
     const apiEndPoint = baseUrl + 'users/';
-    return this.http.put<String>(apiEndPoint + username, { headers: httpOptions })
+    return this.http.put<String>(apiEndPoint + username, { headers: this.httpOptionsService.getHttpOptions() })
       .map(res => this.processHTTPMsgService.extractData(res))
       .catch(error => this.processHTTPMsgService.handleError(error));
   }
 
-  logOut( ):  Observable<Response> {
+  logOut(): Observable<Response> {
     console.log('Provider33');
     const apiEndPoint = baseUrl + 'login/';
-    return this.http.delete(apiEndPoint, { headers: httpOptions })
+    return this.http.delete(apiEndPoint, { headers: this.httpOptionsService.getHttpOptions() })
       .map(res => this.processHTTPMsgService.extractData(res))
       .catch(error => this.processHTTPMsgService.handleError(error));
   }
@@ -104,6 +104,12 @@ export class UserProvider {
    */
   setToken(token: string): void {
     window.localStorage.setItem('token', token);
+  }
+  /**
+   * Delete toket from  the local storage.
+   */
+  deleteToken(): void {
+    window.localStorage.removeItem('token');
   }
 
   /**
@@ -132,9 +138,9 @@ export class UserProvider {
     let headers = new HttpHeaders();
     headers = headers.append('Content-Type', 'application/json');
     const apiEndPoint = baseUrl + 'users/' + email + '/reset_password';
-    return this.http.get(apiEndPoint, {headers})
-        .map(res => this.processHTTPMsgService.extractData(res))
-        .catch(error => this.processHTTPMsgService.handleError(error));
+    return this.http.get(apiEndPoint, { headers })
+      .map(res => this.processHTTPMsgService.extractData(res))
+      .catch(error => this.processHTTPMsgService.handleError(error));
   }
 
   /**
@@ -147,9 +153,9 @@ export class UserProvider {
     let headers = new HttpHeaders();
     headers = headers.append('Content-Type', 'application/json');
     const apiEndPoint = baseUrl + 'users/' + data.email + '/reset_password';
-    return this.http.post(apiEndPoint, data, {headers})
-        .map(res => this.processHTTPMsgService.extractData(res))
-        .catch(error => this.processHTTPMsgService.handleError(error));
+    return this.http.post(apiEndPoint, data, { headers })
+      .map(res => this.processHTTPMsgService.extractData(res))
+      .catch(error => this.processHTTPMsgService.handleError(error));
   }
 
   /**
@@ -160,7 +166,7 @@ export class UserProvider {
    */
   validateCode(user: string, code: string): Observable<Response> {
     const apiEndPoint = baseUrl + 'users/' + user + '/validate/' + code;
-    return this.http.get(apiEndPoint, {headers: httpOptions})
+    return this.http.get(apiEndPoint, {headers: this.httpOptionsService.getHttpOptions()})
         .map(res => this.processHTTPMsgService.extractData(res))
         .catch(error => this.processHTTPMsgService.handleError(error));
   }
@@ -173,7 +179,7 @@ export class UserProvider {
    */
   reSendValidateCode(user: string): Observable<Response> {
     const apiEndPoint = baseUrl + 'users/' + user + '/validate';
-    return this.http.get(apiEndPoint, {headers: httpOptions})
+    return this.http.get(apiEndPoint, {headers: this.httpOptionsService.getHttpOptions()})
         .map(res => this.processHTTPMsgService.extractData(res))
         .catch(error => this.processHTTPMsgService.handleError(error));
   }
