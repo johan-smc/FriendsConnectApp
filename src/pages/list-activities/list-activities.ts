@@ -137,7 +137,12 @@ export class ListActivitiesPage {
 
   openCommentModal(activityId: number) {
     const commetModal = this.modalCtrl.create(CommentsPage, { activityId: activityId } );
+    commetModal.onDidDismiss(data => {
+      this.activities.find(item => item.id === activityId).comments = data;
+      this.showedActivities.find(item => item.id === activityId).comments = data;
+    });
     commetModal.present();
+    
   }
 
 }

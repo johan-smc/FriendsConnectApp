@@ -32,7 +32,7 @@ export class CommentsPage {
   }
 
   dismiss() {
-    this.viewCtrl.dismiss();
+    this.viewCtrl.dismiss(this.comments.length);
   }
 
   ionViewDidLoad() {

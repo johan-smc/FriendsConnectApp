@@ -20,9 +20,10 @@
       <ion-list> 
           <ion-item *ngFor="let comment of comments">
             <ion-avatar item-start>
-              <img src="https://github.com/ionic-team/ionic-preview-app/blob/master/src/assets/img/avatar-finn.png?raw=true">
+              <img [src]="'data:image/jpeg;base64,' + comment.image" *ngIf="comment.image">
+              <img src="../../assets/imgs/useravatar.png" width="200px" *ngIf="!comment.image">
             </ion-avatar>
-            <h2>Venkman</h2>
+            <h2>{{comment.username}}</h2>
             <p>{{comment.description}}</p>
           </ion-item>
       </ion-list>

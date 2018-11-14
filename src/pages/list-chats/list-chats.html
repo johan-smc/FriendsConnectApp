@@ -23,7 +23,8 @@
         <p> fsf </p>
         <ion-item (click)="onChatSelected(chat)">
             <ion-avatar item-start>
-                <img [src]="'data:image/jpeg;base64,' + activity.image">
+                <img [src]="'data:image/jpeg;base64,' + activity.image" *ngIf="activity.image">
+                <img src="../../assets/imgs/activityDefaultComplete.png" width="200px" *ngIf="!activity.image">
             </ion-avatar>
             <h2>{{activity.name}}</h2>
             <p>{{activity.description}}</p>
