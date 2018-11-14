@@ -19,7 +19,9 @@ import { Camera, CameraOptions } from '@ionic-native/camera';
 })
 export class CreateActivityPage {
 
+  private readonly imgPlaceHolder = 'https://via.placeholder.com/100';
   createActivityForm: FormGroup;
+  previewImage = this.imgPlaceHolder;
 
   constructor(
     public navCtrl: NavController,
@@ -44,7 +46,7 @@ export class CreateActivityPage {
   openCamara() {
     const options: CameraOptions = {
       quality: 100,
-      destinationType: this.camera.DestinationType.FILE_URI,
+      destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE
     }
@@ -52,9 +54,10 @@ export class CreateActivityPage {
     this.camera.getPicture(options).then((imageData) => {
       const base64Image = 'data:image/jpeg;base64,' + imageData;
       console.log('Camera: ', base64Image);
+      this.previewImage = base64Image;
     }, (err) => { console.log(err); });
   }
-
+  
   /**
    * Opens the galery to add a picture. Sets the picture 
    * quality and gets the picture in base64.
@@ -62,16 +65,16 @@ export class CreateActivityPage {
   openGalery() {
     const options: CameraOptions = {
       quality: 100,
-      destinationType: this.camera.DestinationType.FILE_URI,
+      destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,
       sourceType: this.camera.PictureSourceType.PHOTOLIBRARY
     }
-
+    
     this.camera.getPicture(options).then((imageData) => {
       const base64Image = 'data:image/jpeg;base64,' + imageData;
       console.log('Galery: ', base64Image);
-      
+      this.previewImage = base64Image;
     }, (err) => { console.log(err); });
   }
 
@@ -87,7 +90,7 @@ export class CreateActivityPage {
     this.activityProvider.postActivity(newActivity).subscribe((resp) => {
       this.presentToast();
       this.createActivityForm.reset();
-      
+      this.previewImage = this.imgPlaceHolder;
     }, errmess => this.postActivitiesErrorHandler(errmess));
   }
 
@@ -171,7 +174,11 @@ export class CreateActivityPage {
         {
           text: 'Delete',
           role: 'destructive',
-          handler: () => { console.log('Destructive clicked'); }
+          icon: 'trash',
+          handler: () => { 
+            console.log('Destructive clicked'); 
+            this.previewImage = this.imgPlaceHolder;
+          }
         }, {
           text: 'Take Picture',
           icon: 'camera',
@@ -189,6 +196,7 @@ export class CreateActivityPage {
         }, {
           text: 'Cancel',
           role: 'cancel',
+          icon: 'close',
           handler: () => { console.log('Cancel clicked'); }
         }
       ]
