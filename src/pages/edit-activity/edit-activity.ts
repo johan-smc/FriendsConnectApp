@@ -133,7 +133,7 @@ export class EditActivityPage {
    */
   openCamara() {
     const options: CameraOptions = {
-      quality: 100,
+      quality: 10,
       destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE
@@ -152,7 +152,7 @@ export class EditActivityPage {
    */
   openGalery() {
     const options: CameraOptions = {
-      quality: 100,
+      quality: 10,
       destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,

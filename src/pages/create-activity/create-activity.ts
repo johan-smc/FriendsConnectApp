@@ -44,7 +44,7 @@ export class CreateActivityPage {
    */
   openCamara() {
     const options: CameraOptions = {
-      quality: 100,
+      quality: 10,
       destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE
@@ -63,7 +63,7 @@ export class CreateActivityPage {
    */
   openGalery() {
     const options: CameraOptions = {
-      quality: 100,
+      quality: 10,
       destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,

@@ -127,4 +127,11 @@ export class ActivityProvider {
       .map(res => this.processHTTPMsgService.extractData(res))
       .catch(error => this.processHTTPMsgService.handleError(error));
   }
+
+  deleteActivity(activityId: number)
+  {
+    return this.http.delete(this.END_POINT + activityId , { headers: this.httpOptionsService.getHttpOptions() })
+      .map(res => this.processHTTPMsgService.extractData(res))
+      .catch(error => this.processHTTPMsgService.handleError(error));
+  }
 }

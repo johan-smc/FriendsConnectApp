@@ -185,4 +185,22 @@ export class MyActivitiesPage {
     });
     commetModal.present();
   }
+  deleteActivityDatabase(activityId: number) 
+  {
+    this.activityProvider.deleteActivity(activityId).subscribe((resp) => {
+      this.showConfirmDeleteActivity();
+      this.deleteActivity(activityId);
+    }, errmess => this.ErrorHandler(errmess));
+  }
+  /**
+   * Shows a confirmation if the un subscription is successful.
+   */
+  private showConfirmDeleteActivity(): void {
+    const toast = this.toastCtrl.create({
+      message: 'Delete successfully',
+      duration: 3000,
+      position: 'middle'
+    });
+    toast.present();
+  }
 }

@@ -55,9 +55,13 @@
             </button>
           </ion-col>
           <ion-col align-self-center text-center>
-            <button ion-button color="primary" clear small icon-start>
+            <button ion-button color="primary" clear small icon-start *ngIf="segment==='suscribe'">
               <ion-icon name="pin"></ion-icon>
               Map
+            </button>
+            <button ion-button color="danger" clear small icon-start (click)="deleteActivityDatabase(activity.id)"*ngIf="segment==='own'">
+              <ion-icon name="trash"></ion-icon>
+              Delete
             </button>
           </ion-col>
         </ion-row>
