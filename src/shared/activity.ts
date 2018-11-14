@@ -12,4 +12,5 @@ export interface Activity {
   author: string;
   image: string;
   is_current_user_subscribed: boolean;
+  comments: number;
 }
