@@ -52,10 +52,10 @@ export class UserProvider {
   }
 
   /**
-  * Retreves the user that matches the username storage.
-  * @param {void}
-  * @return {Observable<User>} API's response
-  */
+   * Retreves the user that matches the username storage.
+   * @param {void}
+   * @return {Observable<User>} API's response
+   */
   getUser(username: string): Observable<User> {
     console.log('Provider');
 
@@ -75,7 +75,7 @@ export class UserProvider {
       .catch(error => this.processHTTPMsgService.handleError(error));
   }
 
-  logOut( ):  Observable<Response> {
+  logOut(): Observable<Response> {
     console.log('Provider33');
     const apiEndPoint = baseUrl + 'login/';
     return this.http.delete(apiEndPoint, { headers: this.httpOptionsService.getHttpOptions() })
@@ -138,9 +138,9 @@ export class UserProvider {
     let headers = new HttpHeaders();
     headers = headers.append('Content-Type', 'application/json');
     const apiEndPoint = baseUrl + 'users/' + email + '/reset_password';
-    return this.http.get(apiEndPoint, {headers})
-        .map(res => this.processHTTPMsgService.extractData(res))
-        .catch(error => this.processHTTPMsgService.handleError(error));
+    return this.http.get(apiEndPoint, { headers })
+      .map(res => this.processHTTPMsgService.extractData(res))
+      .catch(error => this.processHTTPMsgService.handleError(error));
   }
 
   /**
@@ -153,9 +153,9 @@ export class UserProvider {
     let headers = new HttpHeaders();
     headers = headers.append('Content-Type', 'application/json');
     const apiEndPoint = baseUrl + 'users/' + data.email + '/reset_password';
-    return this.http.post(apiEndPoint, data, {headers})
-        .map(res => this.processHTTPMsgService.extractData(res))
-        .catch(error => this.processHTTPMsgService.handleError(error));
+    return this.http.post(apiEndPoint, data, { headers })
+      .map(res => this.processHTTPMsgService.extractData(res))
+      .catch(error => this.processHTTPMsgService.handleError(error));
   }
 
   /**
