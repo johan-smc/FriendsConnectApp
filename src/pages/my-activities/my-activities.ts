@@ -7,6 +7,7 @@ import {Storage} from '@ionic/storage';
 import { ModalController } from 'ionic-angular';
 import { ActivityProvider } from '../../providers/activity/activity';
 import { EditActivityPage } from '../edit-activity/edit-activity';
+import { CommentsPage } from '../comments/comments';
 /**
  * Generated class for the MyActivitiesPage page.
  *
@@ -171,5 +172,14 @@ export class MyActivitiesPage {
     editModal.onDidDismiss(data => {
     });
     editModal.present();
+  }
+
+  openCommentModal(activityId: number) {
+    const commetModal = this.modalCtrl.create(CommentsPage, { activityId: activityId });
+    commetModal.onDidDismiss(data => {
+      this.activities.find(item => item.id === activityId).comments = data;
+      this.showedActivities.find(item => item.id === activityId).comments = data;
+    });
+    commetModal.present();
   }
 }
