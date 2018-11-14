@@ -44,7 +44,7 @@ export class EditProfilePage {
     private camera: Camera,
     private toastCtrl: ToastController,
     private alertCtrl: AlertController,
-    private app : App,
+    private app: App,
   ) {
 
     this.myForm = this.createMyForm();
@@ -56,19 +56,19 @@ export class EditProfilePage {
       if (user) {
         this.userClass = user;
         console.log('lololol' + this.userClass.password);
-        
+
         //this.pass = '';
 
         this.pass = this.userClass.password;
-        this.newpass=this.pass;
-        this.renewpass=this.pass;
+        this.newpass = this.pass;
+        this.renewpass = this.pass;
         this.pass = '';
         this.userProvider.getUser(this.userClass.username).subscribe((resp) => {
           this.userClass = resp;
           this.nameuser = this.userClass.first_name;
           this.lastnameuser = this.userClass.last_name;
           this.aboutme = this.userClass.profile.about_me;
-
+          this.previewImage = 'data:image/jpeg;base64,' + this.userClass.profile.image;
           console.log("-----" + this.userClass.first_name);
 
         }, errmess => this.getErrorHandler(errmess));
@@ -82,7 +82,6 @@ export class EditProfilePage {
    */
   private postImageToUser(username: string): void {
     this.userProvider.postImageToUser(username, this.previewImage).subscribe((resp) => {
-      this.presentToast();
       this.previewImage = this.imgPlaceHolder;
     });
   }
@@ -154,7 +153,6 @@ export class EditProfilePage {
     tempUser.profile.about_me = this.aboutme;
     tempUser.password = this.newpass;
     tempUser.confirmPassword = this.renewpass;
-    console.log("FINAL ", tempUser);
     this.storage.get('currentUser').then(user => {
       if (user) {
         if (user.password == this.pass) {
@@ -166,7 +164,7 @@ export class EditProfilePage {
               console.log(s);
             }, errmess => this.getErrorHandler(errmess));
             this.presentToast('User update successfully');
-            
+
             this.navCtrl.pop();
           }
           else {
@@ -180,22 +178,22 @@ export class EditProfilePage {
           this.presentToast('ERROR!! Contraseña actual no coincide');
 
         }
-
+      }
+    });
     this.storage.get('currentUser').then(user => {
       if (user) {
         let s: string;
         this.userClass = user;
         this.userProvider.putUser(tempUser.username, tempUser).subscribe((resp) => {
           s = resp;
-          if (this.previewImage !== this.previewImage) {
+          if (this.previewImage !== this.previewImage && this.previewImage !== this.userClass.profile.image) {
             this.postImageToUser(tempUser.username);
-            this.presentToast();
+            this.presentToast('Image Saved');
             this.navCtrl.pop();
           }
         }, errmess => this.getErrorHandler(errmess));
       }
     });
-
   }
 
   deleteAccount() {
@@ -212,21 +210,21 @@ export class EditProfilePage {
       if (user) {
         if (user.password == this.pass) {
           let s: string;
-        this.userClass = user;
-        this.userProvider.deleteUser(tempUser.username).subscribe((resp) => {
-          s = resp;
-          console.log(s);
-        }, errmess => this.getErrorHandler(errmess));
-        this.presentToast('User delete successfully');
-        //this.navCtrl.pop();
-        this.app.getRootNav().setRoot(LoginPage);
-      this.userProvider.deleteToken();
+          this.userClass = user;
+          this.userProvider.deleteUser(tempUser.username).subscribe((resp) => {
+            s = resp;
+            console.log(s);
+          }, errmess => this.getErrorHandler(errmess));
+          this.presentToast('User delete successfully');
+          //this.navCtrl.pop();
+          this.app.getRootNav().setRoot(LoginPage);
+          this.userProvider.deleteToken();
         }
         else {
           console.log('ERROR!! Contraseña no coincide');
           this.presentToast('ERROR!! Contraseña incorrecta');
         }
-        
+
       }
     });
   }
@@ -260,7 +258,7 @@ export class EditProfilePage {
   presentToast(value: string) {
     let toast = this.toastCtrl.create({
       //message: 'User update successfully',
-      message: value,      
+      message: value,
       duration: 2000,
       position: 'top'
     });

@@ -7,5 +7,5 @@ export interface User
   username: string;
   password: string;
   confirmPassword: string;
-  profile: {about_me: string, rol: number};
+  profile: {about_me: string, rol: number, image: string};
 }

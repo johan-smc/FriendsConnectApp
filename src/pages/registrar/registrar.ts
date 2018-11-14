@@ -56,8 +56,10 @@ export class RegistrarPage {
     delete this.user.confirmPassword;
     this.user.profile = {
       about_me: 'Something about me',
-      rol: UserRoles.NotValidate
+      rol: UserRoles.NotValidate,
+      image: null
     };
+    delete this.user.profile.image;
     this.userProvider.createUser(this.user).subscribe((resp) => {
       const registerSuccessAlert = this.alertCtrl.create(
           {title: 'Yay!', subTitle: 'Join succesfull.', buttons: ['Dismiss']});
