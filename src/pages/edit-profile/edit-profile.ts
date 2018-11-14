@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, App, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, App, AlertController, ActionSheetController } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { User } from '../../shared/user';
 import { Storage } from '@ionic/storage';
 import { UserProvider } from '../../providers/user/user';
 import { ToastController } from 'ionic-angular';
 import { LoginPage } from '../login/login';
+import { Camera, CameraOptions } from '@ionic-native/camera';
 
 
 /**
@@ -23,7 +24,6 @@ import { LoginPage } from '../login/login';
 export class EditProfilePage {
 
   private userClass: User;
-  //private alertCtrl: AlertController;
   private myForm: FormGroup;
   private nameuser: string = "temp";
   private lastnameuser: string;
@@ -31,15 +31,17 @@ export class EditProfilePage {
   private newpass: string;
   private renewpass: string;
   private pass: string;
-  
-
+  private readonly imgPlaceHolder = '../../assets/imgs/useravatar.png';
+  previewImage = this.imgPlaceHolder;
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     public formBuilder: FormBuilder,
     private userProvider: UserProvider,
+    private actionSheetCtrl: ActionSheetController,
     private storage: Storage,
+    private camera: Camera,
     private toastCtrl: ToastController,
     private alertCtrl: AlertController,
     private app : App,
@@ -71,6 +73,17 @@ export class EditProfilePage {
 
         }, errmess => this.getErrorHandler(errmess));
       }
+    });
+  }
+
+  /**
+   * Sends the image to the data base.
+   * @param {number} activityId ID of activity
+   */
+  private postImageToUser(username: string): void {
+    this.userProvider.postImageToUser(username, this.previewImage).subscribe((resp) => {
+      this.presentToast();
+      this.previewImage = this.imgPlaceHolder;
     });
   }
 
@@ -131,15 +144,12 @@ export class EditProfilePage {
   saveData() {
     console.log(this.myForm.value);
     console.log(this.myForm.value.last_name);
-
   }
 
   setDataProfile(): void {
     let tempUser: User;
     tempUser = this.userClass;
-    console.log("INICIAL ", tempUser);
     tempUser.first_name = this.nameuser;
-    console.log("2222");
     tempUser.last_name = this.lastnameuser;
     tempUser.profile.about_me = this.aboutme;
     tempUser.password = this.newpass;
@@ -171,6 +181,18 @@ export class EditProfilePage {
 
         }
 
+    this.storage.get('currentUser').then(user => {
+      if (user) {
+        let s: string;
+        this.userClass = user;
+        this.userProvider.putUser(tempUser.username, tempUser).subscribe((resp) => {
+          s = resp;
+          if (this.previewImage !== this.previewImage) {
+            this.postImageToUser(tempUser.username);
+            this.presentToast();
+            this.navCtrl.pop();
+          }
+        }, errmess => this.getErrorHandler(errmess));
       }
     });
 
@@ -249,6 +271,86 @@ export class EditProfilePage {
 
 
     toast.present();
+  }
+
+  /**
+   * Opens the camera to add a picture. Sets the camara 
+   * quality and gets the picture in base64.
+   */
+  openCamara() {
+    const options: CameraOptions = {
+      quality: 100,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE
+    }
+
+    this.camera.getPicture(options).then((imageData) => {
+      const base64Image = 'data:image/jpeg;base64,' + imageData;
+      console.log('Camera: ', base64Image);
+      this.previewImage = base64Image;
+    }, (err) => { console.log(err); });
+  }
+
+  /**
+   * Opens the galery to add a picture. Sets the picture 
+   * quality and gets the picture in base64.
+   */
+  openGalery() {
+    const options: CameraOptions = {
+      quality: 100,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE,
+      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY
+    }
+
+    this.camera.getPicture(options).then((imageData) => {
+      const base64Image = 'data:image/jpeg;base64,' + imageData;
+      console.log('Galery: ', base64Image);
+      this.previewImage = base64Image;
+    }, (err) => { console.log(err); });
+  }
+
+
+  /**
+   * Displays the options for image to be uploaded.
+   */
+  presentActionSheet() {
+    const actionSheet = this.actionSheetCtrl.create({
+      title: 'Upload Photo',
+      buttons: [
+        {
+          text: 'Delete',
+          role: 'destructive',
+          icon: 'trash',
+          handler: () => {
+            console.log('Destructive clicked');
+            this.previewImage = this.imgPlaceHolder;
+          }
+        }, {
+          text: 'Take Picture',
+          icon: 'camera',
+          handler: () => {
+            console.log('Take Picture clicked');
+            this.openCamara();
+          }
+        }, {
+          text: 'Upload From Library',
+          icon: 'images',
+          handler: () => {
+            console.log('Upload clicked');
+            this.openGalery();
+          }
+        }, {
+          text: 'Cancel',
+          role: 'cancel',
+          icon: 'close',
+          handler: () => { console.log('Cancel clicked'); }
+        }
+      ]
+    });
+    actionSheet.present();
   }
 
 

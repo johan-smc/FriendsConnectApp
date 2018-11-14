@@ -19,11 +19,13 @@ import { LoginPage } from '../login/login';
 })
 export class ProfilePage {
 
-  user2: User;
-  private dato1: string;
-  private dato2: string;
-  private dato3: string;
-  private dato4: string;
+  private user2: User;
+  dato1: string;
+  dato2: string;
+  dato3: string;
+  dato4: string;
+  private readonly imgPlaceHolder = '../../assets/imgs/useravatar.png';
+  previewImage = this.imgPlaceHolder;
 
   private alertCtrl: AlertController;
   constructor(
