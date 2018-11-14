@@ -32,6 +32,8 @@ export class UserProvider {
     this.currentUser = user;
   }
 
+  
+
   getCurrenUser(): User {
     return this.currentUser;
   }
