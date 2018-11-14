@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController, AlertController, ActionSheetController } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Activity } from '../../shared/activity';
+// import { Activity } from '../../shared/activity';
 import { ActivityProvider } from '../../providers/activity/activity';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 
@@ -50,12 +50,9 @@ export class CreateActivityPage {
     }
 
     this.camera.getPicture(options).then((imageData) => {
-      // imageData is either a base64 encoded string or a file URI
-      // If it's base64 (DATA_URL):
-      let base64Image = 'data:image/jpeg;base64,' + imageData;
-    }, (err) => {
-      // Handle error
-    });
+      const base64Image = 'data:image/jpeg;base64,' + imageData;
+      console.log('Camera: ', base64Image);
+    }, (err) => { console.log(err); });
   }
 
   /**
@@ -72,19 +69,17 @@ export class CreateActivityPage {
     }
 
     this.camera.getPicture(options).then((imageData) => {
-      // imageData is either a base64 encoded string or a file URI
-      // If it's base64 (DATA_URL):
-      let base64Image = 'data:image/jpeg;base64,' + imageData;
-    }, (err) => {
-      // Handle error
-    });
+      const base64Image = 'data:image/jpeg;base64,' + imageData;
+      console.log('Galery: ', base64Image);
+      
+    }, (err) => { console.log(err); });
   }
 
   /**
    * Creates a new activiy and stores it in the data base.
    */
   postActivity() {
-    let newActivity = this.createActivityForm.value;
+    const newActivity = this.createActivityForm.value;
     newActivity.begin_date = this.formatDate(new Date(this.createActivityForm.value.begin_date + ' ' + this.createActivityForm.value.begin_time));
     newActivity.end_date = this.formatDate(new Date(this.createActivityForm.value.end_date + ' ' + this.createActivityForm.value.end_time));
     delete newActivity.begin_time;
@@ -179,12 +174,18 @@ export class CreateActivityPage {
           handler: () => { console.log('Destructive clicked'); }
         }, {
           text: 'Take Picture',
-          icon: 'icon-camera',
-          handler: () => { console.log('Take Picture clicked'); }
+          icon: 'camera',
+          handler: () => { 
+            console.log('Take Picture clicked'); 
+            this.openCamara();
+          }
         }, {
           text: 'Upload From Library',
-          icon: 'icon-images',
-          handler: () => { console.log('Upload clicked'); }
+          icon: 'images',
+          handler: () => { 
+            console.log('Upload clicked'); 
+            this.openGalery();
+          }
         }, {
           text: 'Cancel',
           role: 'cancel',

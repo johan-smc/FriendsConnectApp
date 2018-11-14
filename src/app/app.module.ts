@@ -4,6 +4,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {SplashScreen} from '@ionic-native/splash-screen';
 import {StatusBar} from '@ionic-native/status-bar';
 import {IonicStorageModule} from '@ionic/storage';
+import { Camera, CameraOptions } from '@ionic-native/camera';
 import {IonicApp, IonicErrorHandler, IonicModule} from 'ionic-angular';
 
 import {ForgotPasswordPage} from '../pages/forgot-password/forgot-password';
@@ -63,7 +64,8 @@ import { CommentProvider } from '../providers/comment/comment';
     StatusBar, SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler}, UserProvider,
     ProcessHttpmsgProvider, ActivityProvider,
-    CommentProvider
+    CommentProvider,
+    Camera,
   ]
 })
 export class AppModule {
