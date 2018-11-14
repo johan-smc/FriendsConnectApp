@@ -40,6 +40,11 @@ export class ProfilePage {
 
   }
 
+  ionViewWillEnter(){
+    console.log('ionViewWillEnter ProfilePage');
+    this.getDataProfile();
+  }
+
   goEditProfile(): void {
     console.log("entre");
     this.navCtrl.push(EditProfilePage);
@@ -63,7 +68,7 @@ export class ProfilePage {
         console.log('lololol' + this.user2.password);
         this.userProvider.getUser(this.user2.username).subscribe((resp) => {
           this.user2 = resp;
-          this.dato1 = this.user2.first_name + this.user2.last_name;
+          this.dato1 = this.user2.first_name +' '+ this.user2.last_name;
           this.dato2 = this.user2.email;
           this.dato3 = this.user2.username;
           this.dato4 = this.user2.profile.about_me;
