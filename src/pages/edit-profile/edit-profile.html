@@ -38,12 +38,12 @@
     <ion-item>
       <ion-icon name="lock" item-start></ion-icon>
       <ion-label stacked>Re-Password:</ion-label>
-      <ion-input formControlName="repassword" type="password" [(ngModel)]="pass"></ion-input>
+      <ion-input formControlName="repassword" type="password" ></ion-input>
     </ion-item>
     <button ion-button round full type="submit" [disabled]="!myForm.valid">Edit</button>
   </form>
   <p>
-      <button ion-button block color='danger' round icon-start (click)="saveData()">
+      <button ion-button block color='danger' round icon-start (click)="deleteAccount()">
         <ion-icon name='trash' is-active="false"></ion-icon>
         delete account
       </button>

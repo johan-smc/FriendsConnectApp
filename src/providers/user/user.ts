@@ -88,6 +88,15 @@ export class UserProvider {
       .catch(error => this.processHTTPMsgService.handleError(error));
   }
 
+  deleteUser(username: string): Observable<string>{
+    console.log('Provider');
+    const apiEndPoint = baseUrl + 'users/';
+    return this.http.delete<string>(apiEndPoint + username, { headers: this.httpOptionsService.getHttpOptions() })
+      .map(res => this.processHTTPMsgService.extractData(res))
+      .catch(error => this.processHTTPMsgService.handleError(error));
+
+  }
+
   /**
    * Sends a request to create a new user with the values provided by
    * the object User that goes through parameters.
