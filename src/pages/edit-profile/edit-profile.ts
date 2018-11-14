@@ -22,7 +22,6 @@ import { ToastController } from 'ionic-angular';
 export class EditProfilePage {
 
   private userClass: User;
-  private alertCtrl: AlertController;
   private myForm: FormGroup;
   private nameuser: string = "temp";
   private lastnameuser: string;
