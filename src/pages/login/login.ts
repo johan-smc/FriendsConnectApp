@@ -65,10 +65,7 @@ export class LoginPage {
   onSubmit(): void {
     this.user = this.loginForm.value;
     this.userProvider.loginUser(this.user).subscribe((resp) => {
-      
       this.storage.set('currentUser', this.user);
-      console.log('aaa' + this.user);
-      
       this.userProvider.setUser(this.user);
       this.userProvider.setToken(resp['token']);
       if (resp['validate']) {

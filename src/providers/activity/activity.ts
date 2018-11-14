@@ -102,4 +102,17 @@ export class ActivityProvider {
         .map(res => this.processHTTPMsgService.extractData(res))
         .catch(error => this.processHTTPMsgService.handleError(error));
   }
+
+  /**
+   * Updates the values of an activity
+   * @param {Activity} updatedActivity the new information.
+   */
+  updateActivity(updatedActivity: Activity): Observable<Response> {
+    console.log('Provider: ', updatedActivity);
+    console.log('ActivityId: ', updatedActivity.id);
+    
+    return this.http.put(this.END_POINT + updatedActivity.id.toString(), updatedActivity, { headers: this.httpOptionsService.getHttpOptions()})
+        .map(res => this.processHTTPMsgService.extractData(res))
+        .catch(error => this.processHTTPMsgService.handleError(error));
+  }
 }
