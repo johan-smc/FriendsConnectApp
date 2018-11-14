@@ -39,7 +39,7 @@ export class ActivityProvider {
    * @return {Observable<Response>} API's response
    */
   postActivity(activity: Activity): Observable<Response> {
-    return this.http.post<Activity[]>(this.END_POINT,activity, {headers: this.httpOptionsService.getHttpOptions()})
+    return this.http.post<Response>(this.END_POINT,activity, {headers: httpOptions})
         .map(res => this.processHTTPMsgService.extractData(res))
         .catch(error => this.processHTTPMsgService.handleError(error));
   }

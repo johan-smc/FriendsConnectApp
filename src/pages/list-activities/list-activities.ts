@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
 import { IonicPage } from 'ionic-angular';
-import { AlertController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { ModalController } from 'ionic-angular';
 import { ActivityProvider } from '../../providers/activity/activity';
 import { Activity} from '../../shared/activity';
-import { ToastController } from 'ionic-angular';
+import { ToastController, AlertController } from 'ionic-angular';
 import { CommentsPage } from '../comments/comments';
 import { User } from '../../shared/user';
 
@@ -65,7 +64,7 @@ export class ListActivitiesPage {
    */
   getAllActivitiesErrorHandler(errmess): void {
     const registerErrorAlert = this.alertCtrl.create(
-      { title: 'Ups...', subTitle: errmess.message, buttons: ['Dismiss'] });
+      { title: 'Ups...', subTitle: errmess.error, buttons: ['Dismiss'] });
     registerErrorAlert.present();
   }
 

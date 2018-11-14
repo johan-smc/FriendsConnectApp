@@ -6,7 +6,6 @@ import {StatusBar} from '@ionic-native/status-bar';
 import {IonicStorageModule} from '@ionic/storage';
 import {IonicApp, IonicErrorHandler, IonicModule} from 'ionic-angular';
 
-import {ContactPage} from '../pages/contact/contact';
 import {ForgotPasswordPage} from '../pages/forgot-password/forgot-password';
 import {ListActivitiesPage} from '../pages/list-activities/list-activities';
 import {LoginPage} from '../pages/login/login';
@@ -19,6 +18,7 @@ import {EditProfilePage} from '../pages/edit-profile/edit-profile';
 import {MyActivitiesPage} from '../pages/my-activities/my-activities';
 import {ListChatsPage} from '../pages/list-chats/list-chats'
 import {ConversationPage} from '../pages/conversation/conversation'
+import {CreateActivityPage} from '../pages/create-activity/create-activity';
 
 import {ActivityProvider} from '../providers/activity/activity';
 import {ProcessHttpmsgProvider} from '../providers/process-httpmsg/process-httpmsg';
@@ -32,9 +32,9 @@ import { HttpOptionsProvider } from '../providers/http-options/http-options';
 @NgModule({
   declarations: [
     MyApp,
-    ContactPage,
     TabsPage,
     LoginPage,
+    CreateActivityPage,
     RegistrarPage,
     ListActivitiesPage,
     ProfilePage,
@@ -53,8 +53,8 @@ import { HttpOptionsProvider } from '../providers/http-options/http-options';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    ContactPage,
     LoginPage,
+    CreateActivityPage,
     TabsPage,
     RegistrarPage,
     ListActivitiesPage,
