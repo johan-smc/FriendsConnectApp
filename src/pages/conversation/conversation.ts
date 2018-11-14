@@ -47,11 +47,11 @@ export class ConversationPage {
     });
     
     const msg = {
-      "userName" : "root",
+      "userName" : "William",
       "userId" : 1,
       "status" : "send",
       "time": "0",
-      "message" :"probando..........."
+      "message" :"Hey when are we meeting tonight?"
     };
     this.msgList = [];
     this.msgList.push(msg);
