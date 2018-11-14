@@ -7,6 +7,9 @@
 <ion-header>
 
   <ion-navbar>
+    <ion-buttons start>
+      <button ion-button clear color="secondary" type="submit" form="crateActivity" (click)="postActivity()">Share</button>
+    </ion-buttons>
     <ion-title>
       <p align="center">
         Create Activity
@@ -18,40 +21,55 @@
 
 
 <ion-content padding>
-  <ion-row>
-    <ion-col col-4>
-      <ion-img width="100" height="100" src="https://via.placeholder.com/100"></ion-img>
-    </ion-col>
-    <ion-col>
-      <ion-input type="text" placeholder="Activity Name"></ion-input>
-      <ion-input rows="1" placeholder="Write a caption..."></ion-input>
-    </ion-col>
-  </ion-row>
-  <ion-input type="text" placeholder="Type location.."></ion-input>
-  <ion-list>
-    <ion-list-header>Begin Date</ion-list-header>
-    <ion-item>
-      <ion-label>Date</ion-label>
-      <ion-datetime displayFormat="MMM DD, YYYY" [(ngModel)]="testDate"></ion-datetime>
-    </ion-item>
-    <ion-item>
-      <ion-label>Time</ion-label>
-      <ion-datetime displayFormat="hh:mm A" [(ngModel)]="testTime"></ion-datetime>
-    </ion-item>
-  </ion-list>
-  <ion-list>
-    <ion-list-header>End Date</ion-list-header>
-    <ion-item>
-      <ion-label>Date</ion-label>
-      <ion-datetime displayFormat="MMM DD, YYYY" [(ngModel)]="testDate"></ion-datetime>
-    </ion-item>
-    <ion-item>
-      <ion-label>Time</ion-label>
-      <ion-datetime displayFormat="hh:mm A" [(ngModel)]="testTime"></ion-datetime>
-    </ion-item>
-  </ion-list>
-  <ion-input type="number" placeholder="Max Participants"></ion-input>
-  <ion-row>
 
-  </ion-row>
+  <form id="crateActivity" [formGroup]="createActivityForm">
+    <ion-card>
+      <ion-row>
+        <ion-col col-5>
+          <ion-card-content>
+            <ion-img (click)="presentActionSheet()" width="100" height="100" src="https://via.placeholder.com/100"></ion-img>
+          </ion-card-content>
+        </ion-col>
+        <ion-col>
+          <ion-input formControlName="name" type="text" placeholder="Activity Name"></ion-input>
+          <ion-input formControlName="description" rows="1" placeholder="Write a caption..."></ion-input>
+        </ion-col>
+      </ion-row>
+    </ion-card>
+    <ion-card>
+      <ion-card-header>
+        Begin Date
+      </ion-card-header>
+      <ion-card-content>
+        <ion-item>
+          <ion-label>Begin Date</ion-label>
+          <ion-datetime formControlName="begin_date" displayFormat="MMM DD, YYYY"></ion-datetime>
+        </ion-item>
+        <ion-item>
+          <ion-label>Begin Time</ion-label>
+          <ion-datetime formControlName="begin_time" displayFormat="hh:mm A"></ion-datetime>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+    <ion-card>
+      <ion-card-header>
+        End Date
+      </ion-card-header>
+      <ion-card-content>
+        <ion-item>
+          <ion-label>End Date</ion-label>
+          <ion-datetime formControlName="end_date" displayFormat="MMM DD, YYYY"></ion-datetime>
+        </ion-item>
+        <ion-item>
+          <ion-label>End Time</ion-label>
+          <ion-datetime formControlName="end_time" displayFormat="hh:mm A"></ion-datetime>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+    <ion-card>
+      <ion-card-content>
+        <ion-input formControlName="max_participants" type="number" placeholder="Max Participants"></ion-input>
+      </ion-card-content>
+    </ion-card>
+  </form>
 </ion-content>

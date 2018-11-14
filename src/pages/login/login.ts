@@ -37,7 +37,7 @@ export class LoginPage {
     this.buildLoginForm();
   }
 
-  presentToast() {
+  presentToast(): void {
     const toast = this.toastCtrl.create({
       message: 'Yay!, Login succesfull.',
       duration: 3000,
