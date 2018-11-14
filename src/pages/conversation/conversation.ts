@@ -21,26 +21,31 @@ export class ConversationPage {
   msgList ;
   activity ;
   relativeTime;
+  title: string;
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     private storage: Storage,
      ) {
+   
+
     this.loadDefault();
   }
   ionViewDidLoad() {
-    
+    this.title = this.navParams.get('data');
   }
   loadDefault()
   {
+    
+    //this.activity.name = this.navParams('data');
+
     this.storage.get('user').then(user => {
       this.user = this.toUser = user;
       this.user.id = 1;
       this.toUser.id = 2;
     });
-    this.activity = {
-      "name" : "Colombia Fest"
-    };
+    
     const msg = {
       "userName" : "root",
       "userId" : 1,

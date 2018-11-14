@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, ActionSheetController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, App, AlertController, ActionSheetController } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { User } from '../../shared/user';
 import { Storage } from '@ionic/storage';
 import { UserProvider } from '../../providers/user/user';
 import { ToastController } from 'ionic-angular';
+import { LoginPage } from '../login/login';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 
 
@@ -27,6 +28,8 @@ export class EditProfilePage {
   private nameuser: string = "temp";
   private lastnameuser: string;
   private aboutme: string;
+  private newpass: string;
+  private renewpass: string;
   private pass: string;
   private readonly imgPlaceHolder = '../../assets/imgs/useravatar.png';
   previewImage = this.imgPlaceHolder;
@@ -40,7 +43,8 @@ export class EditProfilePage {
     private storage: Storage,
     private camera: Camera,
     private toastCtrl: ToastController,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    private app: App,
   ) {
 
     this.myForm = this.createMyForm();
@@ -52,13 +56,19 @@ export class EditProfilePage {
       if (user) {
         this.userClass = user;
         console.log('lololol' + this.userClass.password);
+
+        //this.pass = '';
+
         this.pass = this.userClass.password;
+        this.newpass = this.pass;
+        this.renewpass = this.pass;
+        this.pass = '';
         this.userProvider.getUser(this.userClass.username).subscribe((resp) => {
           this.userClass = resp;
           this.nameuser = this.userClass.first_name;
           this.lastnameuser = this.userClass.last_name;
           this.aboutme = this.userClass.profile.about_me;
-
+          this.previewImage = 'data:image/jpeg;base64,' + this.userClass.profile.image;
           console.log("-----" + this.userClass.first_name);
 
         }, errmess => this.getErrorHandler(errmess));
@@ -72,7 +82,6 @@ export class EditProfilePage {
    */
   private postImageToUser(username: string): void {
     this.userProvider.postImageToUser(username, this.previewImage).subscribe((resp) => {
-      this.presentToast();
       this.previewImage = this.imgPlaceHolder;
     });
   }
@@ -107,28 +116,33 @@ export class EditProfilePage {
             Validators.maxLength(20)
           ]
         ],
-        password: [
+        newpassword: [
           '',
           [
             Validators.required, Validators.minLength(4),
             Validators.maxLength(20)
           ]
         ],
-        repassword: [
+        renewpassword: [
+          '',
+          [
+            Validators.required, Validators.minLength(4),
+            Validators.maxLength(20)
+          ]
+        ],
+        password: [
           '',
           [
             Validators.required, Validators.minLength(4),
             Validators.maxLength(20)
           ]
         ]
-
       });
   }
 
   saveData() {
     console.log(this.myForm.value);
     console.log(this.myForm.value.last_name);
-
   }
 
   setDataProfile(): void {
@@ -137,21 +151,49 @@ export class EditProfilePage {
     tempUser.first_name = this.nameuser;
     tempUser.last_name = this.lastnameuser;
     tempUser.profile.about_me = this.aboutme;
+    tempUser.password = this.newpass;
+    tempUser.confirmPassword = this.renewpass;
+    this.storage.get('currentUser').then(user => {
+      if (user) {
+        if (user.password == this.pass) {
+          if (tempUser.password == tempUser.confirmPassword) {
+            let s: string;
+            this.userClass = user;
+            this.userProvider.putUser(tempUser.username, tempUser).subscribe((resp) => {
+              s = resp;
+              console.log(s);
+            }, errmess => this.getErrorHandler(errmess));
+            this.presentToast('User update successfully');
+
+            this.navCtrl.pop();
+          }
+          else {
+            console.log('ERROR!! Contraseña Nueva no coincide');
+            this.presentToast('ERROR!! Contraseña Nueva no coincide');
+          }
+
+        }
+        else {
+          console.log('ERROR!! Contraseña actual no coincide');
+          this.presentToast('ERROR!! Contraseña actual no coincide');
+
+        }
+      }
+    });
     this.storage.get('currentUser').then(user => {
       if (user) {
         let s: string;
         this.userClass = user;
         this.userProvider.putUser(tempUser.username, tempUser).subscribe((resp) => {
           s = resp;
-          if (this.previewImage !== this.previewImage) {
+          if (this.previewImage !== this.previewImage && this.previewImage !== this.userClass.profile.image) {
             this.postImageToUser(tempUser.username);
-            this.presentToast();
+            this.presentToast('Image Saved');
             this.navCtrl.pop();
           }
         }, errmess => this.getErrorHandler(errmess));
       }
     });
-
   }
 
   deleteAccount() {
@@ -159,21 +201,30 @@ export class EditProfilePage {
   }
 
   deleteRest() {
-    
+
     let tempUser: User;
-    
+
     tempUser = this.userClass;
-    
+
     this.storage.get('currentUser').then(user => {
       if (user) {
-        let s: string;
-        this.userClass = user;
-        this.userProvider.deleteUser(tempUser.username).subscribe((resp) => {
-          s = resp;
-          console.log(s);
-        }, errmess => this.getErrorHandler(errmess));
-        this.presentToast();
-        this.navCtrl.pop();
+        if (user.password == this.pass) {
+          let s: string;
+          this.userClass = user;
+          this.userProvider.deleteUser(tempUser.username).subscribe((resp) => {
+            s = resp;
+            console.log(s);
+          }, errmess => this.getErrorHandler(errmess));
+          this.presentToast('User delete successfully');
+          //this.navCtrl.pop();
+          this.app.getRootNav().setRoot(LoginPage);
+          this.userProvider.deleteToken();
+        }
+        else {
+          console.log('ERROR!! Contraseña no coincide');
+          this.presentToast('ERROR!! Contraseña incorrecta');
+        }
+
       }
     });
   }
@@ -204,10 +255,11 @@ export class EditProfilePage {
   }
 
 
-  presentToast() {
+  presentToast(value: string) {
     let toast = this.toastCtrl.create({
-      message: 'User update successfully',
-      duration: 1000,
+      //message: 'User update successfully',
+      message: value,
+      duration: 2000,
       position: 'top'
     });
 
