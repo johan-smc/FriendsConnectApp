@@ -75,11 +75,8 @@ export class UserProvider {
   }
 
   putUser(username: string, Editeduser: User): Observable<string> {
-    console.log('Provider2');
     const apiEndPoint = baseUrl + 'users/';
-    console.log(Editeduser);
     delete Editeduser.username;
-    console.log(Editeduser);
     return this.http.put<string>(apiEndPoint + username, Editeduser, { headers: this.httpOptionsService.getHttpOptions() })
       .map(res => this.processHTTPMsgService.extractData(res))
       .catch(error => this.processHTTPMsgService.handleError(error));

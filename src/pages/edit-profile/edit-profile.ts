@@ -68,7 +68,9 @@ export class EditProfilePage {
           this.nameuser = this.userClass.first_name;
           this.lastnameuser = this.userClass.last_name;
           this.aboutme = this.userClass.profile.about_me;
-          this.previewImage = 'data:image/jpeg;base64,' + this.userClass.profile.image;
+          if (this.userClass.profile.image) {
+            this.previewImage = 'data:image/jpeg;base64,' + this.userClass.profile.image;
+          }
           console.log("-----" + this.userClass.first_name);
 
         }, errmess => this.getErrorHandler(errmess));
@@ -153,6 +155,7 @@ export class EditProfilePage {
     tempUser.profile.about_me = this.aboutme;
     tempUser.password = this.newpass;
     tempUser.confirmPassword = this.renewpass;
+    console.log('First Temp User: ', tempUser);
     this.storage.get('currentUser').then(user => {
       if (user) {
         if (user.password == this.pass) {
@@ -161,6 +164,11 @@ export class EditProfilePage {
             this.userClass = user;
             this.userProvider.putUser(tempUser.username, tempUser).subscribe((resp) => {
               s = resp;
+              if (this.previewImage !== this.previewImage && this.previewImage !== this.userClass.profile.image) {
+                this.postImageToUser(tempUser.username);
+                this.presentToast('Image Saved');
+                this.navCtrl.pop();
+              }
               console.log(s);
             }, errmess => this.getErrorHandler(errmess));
             this.presentToast('User update successfully');
@@ -178,20 +186,6 @@ export class EditProfilePage {
           this.presentToast('ERROR!! Contraseña actual no coincide');
 
         }
-      }
-    });
-    this.storage.get('currentUser').then(user => {
-      if (user) {
-        let s: string;
-        this.userClass = user;
-        this.userProvider.putUser(tempUser.username, tempUser).subscribe((resp) => {
-          s = resp;
-          if (this.previewImage !== this.previewImage && this.previewImage !== this.userClass.profile.image) {
-            this.postImageToUser(tempUser.username);
-            this.presentToast('Image Saved');
-            this.navCtrl.pop();
-          }
-        }, errmess => this.getErrorHandler(errmess));
       }
     });
   }

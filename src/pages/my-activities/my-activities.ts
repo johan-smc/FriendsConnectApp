@@ -41,9 +41,11 @@ export class MyActivitiesPage {
 
   ionViewDidLoad() {
   }
+
   ionViewWillEnter(){
     this.reLoadActivities();
   }
+
   reLoadActivities(): any {
     if( this.segment === 'suscribe' )
     {
@@ -170,6 +172,7 @@ export class MyActivitiesPage {
   private openEditModal(activityId: number) {
     const editModal = this.modalCtrl.create(EditActivityPage, { activityId: activityId });
     editModal.onDidDismiss(data => {
+      this.reLoadActivities();
     });
     editModal.present();
   }
