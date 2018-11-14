@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, App, AlertController } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { User } from '../../shared/user';
 import { Storage } from '@ionic/storage';
 import { UserProvider } from '../../providers/user/user';
 import { ToastController } from 'ionic-angular';
+import { LoginPage } from '../login/login';
 
 
 /**
@@ -22,12 +23,16 @@ import { ToastController } from 'ionic-angular';
 export class EditProfilePage {
 
   private userClass: User;
-  private alertCtrl: AlertController;
+  //private alertCtrl: AlertController;
   private myForm: FormGroup;
   private nameuser: string = "temp";
   private lastnameuser: string;
   private aboutme: string;
+  private newpass: string;
+  private renewpass: string;
   private pass: string;
+  
+
 
   constructor(
     public navCtrl: NavController,
@@ -36,7 +41,8 @@ export class EditProfilePage {
     private userProvider: UserProvider,
     private storage: Storage,
     private toastCtrl: ToastController,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    private app : App,
   ) {
 
     this.myForm = this.createMyForm();
@@ -48,7 +54,13 @@ export class EditProfilePage {
       if (user) {
         this.userClass = user;
         console.log('lololol' + this.userClass.password);
+        
+        //this.pass = '';
+
         this.pass = this.userClass.password;
+        this.newpass=this.pass;
+        this.renewpass=this.pass;
+        this.pass = '';
         this.userProvider.getUser(this.userClass.username).subscribe((resp) => {
           this.userClass = resp;
           this.nameuser = this.userClass.first_name;
@@ -92,21 +104,27 @@ export class EditProfilePage {
             Validators.maxLength(20)
           ]
         ],
-        password: [
+        newpassword: [
           '',
           [
             Validators.required, Validators.minLength(4),
             Validators.maxLength(20)
           ]
         ],
-        repassword: [
+        renewpassword: [
+          '',
+          [
+            Validators.required, Validators.minLength(4),
+            Validators.maxLength(20)
+          ]
+        ],
+        password: [
           '',
           [
             Validators.required, Validators.minLength(4),
             Validators.maxLength(20)
           ]
         ]
-
       });
   }
 
@@ -124,17 +142,35 @@ export class EditProfilePage {
     console.log("2222");
     tempUser.last_name = this.lastnameuser;
     tempUser.profile.about_me = this.aboutme;
+    tempUser.password = this.newpass;
+    tempUser.confirmPassword = this.renewpass;
     console.log("FINAL ", tempUser);
     this.storage.get('currentUser').then(user => {
       if (user) {
-        let s: string;
-        this.userClass = user;
-        this.userProvider.putUser(tempUser.username, tempUser).subscribe((resp) => {
-          s = resp;
-          console.log(s);
-        }, errmess => this.getErrorHandler(errmess));
-        this.presentToast();
-        this.navCtrl.pop();
+        if (user.password == this.pass) {
+          if (tempUser.password == tempUser.confirmPassword) {
+            let s: string;
+            this.userClass = user;
+            this.userProvider.putUser(tempUser.username, tempUser).subscribe((resp) => {
+              s = resp;
+              console.log(s);
+            }, errmess => this.getErrorHandler(errmess));
+            this.presentToast('User update successfully');
+            
+            this.navCtrl.pop();
+          }
+          else {
+            console.log('ERROR!! Contraseña Nueva no coincide');
+            this.presentToast('ERROR!! Contraseña Nueva no coincide');
+          }
+
+        }
+        else {
+          console.log('ERROR!! Contraseña actual no coincide');
+          this.presentToast('ERROR!! Contraseña actual no coincide');
+
+        }
+
       }
     });
 
@@ -145,21 +181,29 @@ export class EditProfilePage {
   }
 
   deleteRest() {
-    
+
     let tempUser: User;
-    
+
     tempUser = this.userClass;
-    
+
     this.storage.get('currentUser').then(user => {
       if (user) {
-        let s: string;
+        if (user.password == this.pass) {
+          let s: string;
         this.userClass = user;
         this.userProvider.deleteUser(tempUser.username).subscribe((resp) => {
           s = resp;
           console.log(s);
         }, errmess => this.getErrorHandler(errmess));
-        this.presentToast();
-        this.navCtrl.pop();
+        this.presentToast('User delete successfully');
+        //this.navCtrl.pop();
+        this.app.getRootNav().setRoot(LoginPage);
+      this.userProvider.deleteToken();
+        }
+        else {
+          console.log('ERROR!! Contraseña no coincide');
+        }
+        
       }
     });
   }
@@ -190,10 +234,11 @@ export class EditProfilePage {
   }
 
 
-  presentToast() {
+  presentToast(value: string) {
     let toast = this.toastCtrl.create({
-      message: 'User update successfully',
-      duration: 1000,
+      //message: 'User update successfully',
+      message: value,      
+      duration: 2000,
       position: 'top'
     });
 
