@@ -23,6 +23,7 @@ export class EditActivityPage {
   previewImage = this.imgPlaceHolder;
   editActivityForm: FormGroup;
   activity: Activity;
+  base64Image: string;
 
 
   constructor(
@@ -89,7 +90,7 @@ export class EditActivityPage {
    * @param {number} activityId ID of activity
    */
   private postImageToActivity(activityId: number): void {
-    this.activityProvider.postImageToActivity(activityId, this.previewImage).subscribe((resp) => {
+    this.activityProvider.postImageToActivity(activityId, this.base64Image).subscribe((resp) => {
       this.presentToast();
       this.previewImage = this.imgPlaceHolder;
     });
@@ -140,6 +141,7 @@ export class EditActivityPage {
     }
 
     this.camera.getPicture(options).then((imageData) => {
+      this.base64Image = imageData;
       const base64Image = 'data:image/jpeg;base64,' + imageData;
       console.log('Camera: ', base64Image);
       this.previewImage = base64Image;
@@ -160,6 +162,7 @@ export class EditActivityPage {
     }
 
     this.camera.getPicture(options).then((imageData) => {
+      this.base64Image = imageData;
       const base64Image = 'data:image/jpeg;base64,' + imageData;
       console.log('Galery: ', base64Image);
       this.previewImage = base64Image;

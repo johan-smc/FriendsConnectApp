@@ -33,6 +33,7 @@ export class EditProfilePage {
   private pass: string;
   private readonly imgPlaceHolder = '../../assets/imgs/useravatar.png';
   previewImage = this.imgPlaceHolder;
+  base64Image: string;
 
   constructor(
     public navCtrl: NavController,
@@ -83,7 +84,7 @@ export class EditProfilePage {
    * @param {number} activityId ID of activity
    */
   private postImageToUser(username: string): void {
-    this.userProvider.postImageToUser(username, this.previewImage).subscribe((resp) => {
+    this.userProvider.postImageToUser(username, this.base64Image).subscribe((resp) => {
       this.previewImage = this.imgPlaceHolder;
     });
   }
@@ -278,6 +279,7 @@ export class EditProfilePage {
     }
 
     this.camera.getPicture(options).then((imageData) => {
+      this.base64Image = imageData;
       const base64Image = 'data:image/jpeg;base64,' + imageData;
       console.log('Camera: ', base64Image);
       this.previewImage = base64Image;
@@ -298,6 +300,7 @@ export class EditProfilePage {
     }
 
     this.camera.getPicture(options).then((imageData) => {
+      this.base64Image = imageData;
       const base64Image = 'data:image/jpeg;base64,' + imageData;
       console.log('Galery: ', base64Image);
       this.previewImage = base64Image;
