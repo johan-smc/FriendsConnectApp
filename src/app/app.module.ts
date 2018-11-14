@@ -15,16 +15,19 @@ import {RegistrarPage} from '../pages/registrar/registrar';
 import {TabsPage} from '../pages/tabs/tabs';
 import {ValidateCodePage} from '../pages/validate-code/validate-code';
 import {CommentsPage} from '../pages/comments/comments';
+import {EditProfilePage} from '../pages/edit-profile/edit-profile';
+import {MyActivitiesPage} from '../pages/my-activities/my-activities';
+import {ListChatsPage} from '../pages/list-chats/list-chats'
+import {ConversationPage} from '../pages/conversation/conversation'
 
 import {ActivityProvider} from '../providers/activity/activity';
 import {ProcessHttpmsgProvider} from '../providers/process-httpmsg/process-httpmsg';
 import {UserProvider} from '../providers/user/user';
-import {EditProfilePage} from '../pages/edit-profile/edit-profile';
-import {MyActivitiesPage} from '../pages/my-activities/my-activities';
 
 import {MyApp} from './app.component';
 import { CommentProvider } from '../providers/comment/comment';
 import { HttpOptionsProvider } from '../providers/http-options/http-options';
+
 
 @NgModule({
   declarations: [
@@ -40,6 +43,8 @@ import { HttpOptionsProvider } from '../providers/http-options/http-options';
     EditProfilePage,
     CommentsPage,
     MyActivitiesPage,
+    ListChatsPage,
+    ConversationPage,
   ],
   imports: [
     BrowserModule, IonicModule.forRoot(MyApp), HttpClientModule,
@@ -59,6 +64,8 @@ import { HttpOptionsProvider } from '../providers/http-options/http-options';
     EditProfilePage,
     CommentsPage,
     MyActivitiesPage,
+    ListChatsPage,
+    ConversationPage,
   ],
   providers: [
     StatusBar, SplashScreen,
